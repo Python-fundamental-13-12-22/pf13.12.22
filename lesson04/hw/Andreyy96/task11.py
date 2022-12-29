@@ -11,5 +11,5 @@ while numbers != 0:
 
 sum_numbers = negative_numbers + positive_numbers
 
-print(f'Процент положительных чисел:  {round(positive_numbers / sum_numbers, 2) * 100} %')
-print(f'Процент отрицательных чисел:  {round(negative_numbers / sum_numbers, 2) * 100} %')
+print(f'Процент положительных чисел:  {(positive_numbers/sum_numbers) * 100} %')
+print(f'Процент отрицательных чисел:  {(negative_numbers/sum_numbers) * 100} %')
