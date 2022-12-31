@@ -14,12 +14,22 @@ elif remainder != 0:
 year = int(input("Введіть рік:"))
 month = int(input("Введіть номер місяця:"))
 day = int(input("Введіть число дня:"))
-date = f"{day}.{month}.{year}"
 
-if 1 <= month <= 12 and year > 0 and 1 <= day <= 31:
-    print(f"Дата: {date}")
+if month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12:
+    max_day_value = 31
+elif month == 4 or month == 6 or month == 9 or month == 11:
+    max_day_value = 30
+elif year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
+    max_day_value = 29
 else:
-    print("Невірна дата")
+    max_day_value = 28
+
+if month < 1 or month > 12:
+    print("Дата не вірна")
+elif day < 1 or day > max_day_value:
+    print("Дата не вірна")
+else:
+    print(f"Дата вірна: {day}.{month}.{year}")
 
 #task 3
 a = int(input("Введіть число a:"))
