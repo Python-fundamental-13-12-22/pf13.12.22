@@ -6,5 +6,5 @@ for value in range(0, 20):
 print(list1)
 for value in range(len(list1)):
     if list1[value] % 2 == 0:
-        list2.append(list1.index(list1[value]))
+        list2.append(value)
 print(list2)
