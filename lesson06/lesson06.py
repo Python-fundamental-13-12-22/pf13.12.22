@@ -200,7 +200,7 @@
 # my_lambda = lambda a, b: a + b
 # print(my_lambda(1, 2))
 # print(my_lambda(11, 2))
-
-l = [1, 2, "77", 99, "35", 45, 66]
-
-print(sorted(l, key=lambda x: x if type(x) is int else int(x)))
+#
+# l = [1, 2, "77", 99, "35", 45, 66]
+#
+# print(sorted(l, key=lambda x: x if type(x) is int else int(x)))

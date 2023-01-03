@@ -194,7 +194,33 @@ def print_matrix(matrix):
             print(matrix[i][j], end="\t")
         print()
 
-m = generate_matrix()
+# m = generate_matrix()
+# print_matrix(m)
+# m = generate_matrix(10, 10, 1, 20)
+# print_matrix(m)
+
+
+
+# Порахувати суми кожного рядка і кожного стовпця матриці.
+# Доповнити її стовпцем, який містить суми елементів рядків та рядком, елементами якого є суми елементів стовпців.
+
+n = 5
+m = generate_matrix(n, n)
 print_matrix(m)
-m = generate_matrix(10, 10, 1, 20)
+
+vector1 = []
+for i in range(n):
+    vector1.append(sum(m[i]))
+
+vector2 = m[0][:]
+for i in range(1,n):
+    for j in range(n):
+        vector2[j] += m[i][j]
+
+for i in range(n):
+    m[i].append(vector1[i])
+# vector2.append(sum(vector1))
+m.append(vector2)
 print_matrix(m)
+
+
