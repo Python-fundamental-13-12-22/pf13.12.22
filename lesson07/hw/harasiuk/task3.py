@@ -13,6 +13,6 @@ class Name:
 me = Name("Kolya", "Harasiuk")
 fullname = me.fullname()
 print(fullname)
-email = me.initials()
-print(email)
+initials = me.initials()
+print(initials)
 
