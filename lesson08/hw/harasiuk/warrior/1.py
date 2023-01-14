@@ -5,8 +5,8 @@ class Warrior():
         self.rank = rank
         self.achievements = achievements
 
-    def  battle(self, other_level):
-        if (other_level < 1 and other_level > 100):
+    def battle(self, other_level):
+        if (other_level < 1 or other_level > 100):
             return "Invalid level"
         elif self.level == other_level:
             self.experience = self.experience + 10
@@ -32,7 +32,7 @@ class Warrior():
             self.experience = self.experience + l[1]
             self.achievements.append(l[0])
         else:
-            print("Not strong enough")
+            return "Not strong enough"
         if self.level > 100:
             self.level = 100
             self.experience = 10000
