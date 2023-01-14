@@ -1,4 +1,3 @@
-# ["Pushover", "Novice", "Fighter", "Warrior", "Veteran", "Sage", "Elite", "Conqueror", "Champion", "Master", "Greatest"
 class Warrior():
     def __init__(self, level=1, experience=100, rank="Pushover", achivments=[]):
         self.level = level
