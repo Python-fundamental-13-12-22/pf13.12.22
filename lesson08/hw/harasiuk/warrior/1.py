@@ -1,46 +1,47 @@
 class Warrior():
-    def __init__(self, level=1, experience=100, rank="Pushover", achivments=[]):
+    def __init__(self, level=1, experience=100, rank="Pushover", achievements=[]):
         self.level = level
         self.experience = experience
         self.rank = rank
-        self.achivments = achivments
+        self.achievements = achievements
 
-    def  battle(self, other):
-        if (other.level < 1 and other.level > 100):
-            print("Invalid level")
-        elif self.level == other.level:
+    def  battle(self, other_level):
+        if (other_level < 1 and other_level > 100):
+            return "Invalid level"
+        elif self.level == other_level:
             self.experience = self.experience + 10
-        elif self.level - other.level == 1:
+        elif self.level - other_level == 1:
             self.experience = self.experience + 5
-        elif self.level - other.level == 2:
-            pass
-        elif other.level - self.level >= 5:
-            print("You've been defeated")
+        elif other_level - self.level >= 5:
+            return "You've been defeated"
         else:
-            diff = other.level - self.level
+            diff = other_level - self.level
             self.level = self.level + 20*diff*diff
-        rank_list = ["Pushover", "Novice", "Fighter", "Warrior", "Veteran", "Sage", "Elite", "Conqueror", "Champion",
-                     "Master", "Greatest"]
-        self.rank = rank_list[level // 10]
+        rank_list = ["Pushover", "Novice", "Fighter", "Warrior", "Veteran", "Sage", "Elite", "Conqueror", "Champion", "Master", "Greatest"]
         self.level = self.experience // 100
+        self.rank = rank_list[self.level // 10]
+        if self.level - other_level >= 2:
+            return "Easy fight"
+        elif self.level - other_level == 1 or self.level == other_level:
+            return "A good fight"
+        elif self.level < other_level:
+            return "An intense fight"
 
     def training(self, l):
         if self.level >= l[2]:
             self.experience = self.experience + l[1]
-            self.achivments.append(l[0])
+            self.achievements.append(l[0])
         else:
             print("Not strong enough")
         if self.level > 100:
             self.level = 100
             self.experience = 10000
         rank_list = ["Pushover", "Novice", "Fighter", "Warrior", "Veteran", "Sage", "Elite", "Conqueror", "Champion", "Master", "Greatest"]
-        self.rank = rank_list[self.level // 10]
         self.level = self.experience // 100
+        self.rank = rank_list[self.level // 10]
+        return l[0]
+
 
     def printed(self):
         print(f" ({self.level}, {self.rank}, {self.experience})")
 
-tom = Warrior()
-bruce_lee = Warrior()
-bruce_lee.training(["Defeated Chuck Norris", 9000, 1])
-bruce_lee.printed()
