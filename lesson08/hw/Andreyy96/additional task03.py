@@ -1,6 +1,6 @@
 class Warrior:
 
-    def __init__(self, level=1, rank='Pushover', experoence=100, achievements=[]):
+    def __init__(self, level=3, rank='Pushover', experoence=100, achievements=[]):
         self.level = level
         self.rank = rank
         self.experience = experoence
@@ -34,39 +34,41 @@ class Warrior:
                 self.level = 1
                 self.rank = 'Pushover'
                 self.experience = 100
-                self.achievements = []
             else:
                 self.level = 100
                 self.rank = 'Greatest'
                 self.experience = 10000
-                self.achievements = ['Defeated Chuck Norris']
+
 
     def battle_rules(self, enemy_level):
+        message = ''
         if self.level < 1 or self.level > 100:
             return 'Invalid level'
         elif self.level == enemy_level:
             self.experience += 10
-            print('A good fight')
-            self.formula_get_level(enemy_level)
             self.rank_warrior()
         elif self.level - enemy_level == 1:
             self.experience += 5
-            print('A good fight')
-            self.formula_get_level(enemy_level)
             self.rank_warrior()
-        elif self.level - enemy_level <= 2 and self.level - enemy_level > 0:
+        elif self.level - enemy_level == 2:
             self.experience += 0
-            print('An intense fight')
             self.formula_get_level(enemy_level)
             self.rank_warrior()
-        elif self.level - enemy_level >= -2 and self.level - enemy_level > -5:
-            self.experience += 0
-            print('Easy fight')
+        elif enemy_level - self.level == 6:
             self.formula_get_level(enemy_level)
-            self.rank_warrior()
+        elif enemy_level - self.level >= 1 and enemy_level - self.level < 5:
+            self.formula_get_level(enemy_level)
         elif self.level - enemy_level <= -5:
             print("You've been defeated")
-            self.formula_get_level(enemy_level)
+
+        if self.level - enemy_level >= 2:
+            message  = "Easy fight"
+        elif self.level - enemy_level == 1 or self.level == enemy_level:
+            message = "A good fight"
+        elif self.level < enemy_level:
+            message = "An intense fight"
+
+        return message
 
     def formula_get_level(self, enemy_level):
         diff = enemy_level - self.level
@@ -78,15 +80,18 @@ class Warrior:
             self.experience = self.experience + trainer[1]
             self.achievements.append(trainer[0])
             self.level = self.experience // 100
-            jet_lee.rank_warrior()
+            self.rank_warrior()
         else:
             return "Not strong enough"
+        return trainer[0]
 
 
-jet_lee = Warrior()
-jet_lee.battle_rules(3)
-print(f'Опыт битвы с противником 3 уровня: {jet_lee.experience}')
-jet_lee.training(["Defeated Chuck Norris", 9000, 1])
-print(f'Опыт после тренировки с тренером: {jet_lee.experience}')
-print(jet_lee.level)
-print(jet_lee.rank)
+jet_li = Warrior()
+
+print(jet_li.training(["Defeated Chuck Norris", 9000, 1]))
+print(jet_li.experience)
+print(jet_li.level)
+print(jet_li.rank)
+print(jet_li.battle_rules(90))
+print(jet_li.experience)
+print(jet_li.achievements)
