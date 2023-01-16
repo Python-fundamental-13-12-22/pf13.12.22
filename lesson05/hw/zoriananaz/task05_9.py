@@ -19,7 +19,21 @@ def print_matrix(matrix):
 
 m_x = generate_matrix(3, 3, 3)
 print_matrix(m_x)
-list_i = []
-list_j = []
+
+
+list_1 = []
+for i in range(3):
+    list_1.append(sum(m_x[i]))
+list_j = m_x[0][:]
+
+for i in range(1, 3):
+    for j in range(3):
+        list_j[j] += m_x[i][j]
+
+for i in range(3):
+    m_x[i].append(list_1[i])
+m_x.append(list_j)
+print_matrix(m_x)
+
 
 

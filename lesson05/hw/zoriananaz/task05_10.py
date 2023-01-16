@@ -1,6 +1,6 @@
 #10. Сформувати матрицю з чисел від 0 до 999, вивести її на екран.
 # Порахувати кількість двозначних чисел в ній.
-def generate_matrix(n=4, m=4, min_value=0, max_value=9):
+def generate_matrix(n=10, m=10, min_value=0, max_value=999):
     import random
     matrix = []
     for i in range(n):
@@ -14,16 +14,11 @@ def print_matrix(matrix):
         for j in range(len(matrix[i])):
             print(matrix[i][j], end="\t")
         print()
-m_x = generate_matrix(3, 3 ,3)
+m_x = generate_matrix(4, 4, 4)
 print_matrix(m_x)
-
-for i in m_x:
-    s = 0
-    for j in i:
-        s += j
-    print(s)
-for j in m_x:
-    s = 0
-    for i in j:
-        s += i
-    print(s)
+count = 0
+for d in range(4):
+    for p in range(4):
+        if 9 < m_x[d][p] < 100:
+            count += 1
+print(count)
