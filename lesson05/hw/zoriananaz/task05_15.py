@@ -1,5 +1,5 @@
-"""15. Змінити послідовність стовпців матриці так, щоб елементи її першого рядка були
- відсортовані за зростанням."""
+# 15. Змінити послідовність стовпців матриці так, щоб елементи її першого рядка були
+# відсортовані за зростанням.
 
 
 def generate_matrix(n=3, m=3, min_value=0, max_value=20):
@@ -13,16 +13,11 @@ def generate_matrix(n=3, m=3, min_value=0, max_value=20):
     return matrix
 
 
-
 def print_matrix(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             print(matrix[i][j], end="\t")
         print()
-
-
-#mtx = generate_matrix()
-#print_matrix(mtx)
 
 
 mtx = generate_matrix(3, 3, 1, 20)
@@ -41,5 +36,3 @@ for i in range(len(mtx_result)):
         mtx_result[k][min_i], mtx_result[k][i] = mtx_result[k][i], mtx_result[k][min_i]
 print()
 print_matrix(mtx_result)
-
-

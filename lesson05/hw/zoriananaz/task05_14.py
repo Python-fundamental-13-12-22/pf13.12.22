@@ -1,5 +1,5 @@
-"""14. У матриці 10x10 поміняти значення елементів у кожному рядку, розташовані
- відповідно на головній та бічній діагоналях."""
+# 14. У матриці 10x10 поміняти значення елементів у кожному рядку, розташовані
+# відповідно на головній та бічній діагоналях.
 
 
 def generate_matrix(n=10, m=10, min_value=0, max_value=100):
@@ -20,21 +20,11 @@ def print_matrix(matrix):
         print()
 
 
-#mtx = generate_matrix()
-#print_matrix(mtx)
-mtx = generate_matrix(3, 3, 1, 100)
+mtx = generate_matrix(10, 10, 0, 100)
 print_matrix(mtx)
 
-"""for i in range(10):
-    print(mtx[i][i])
-
-for i in range(9, -1, -1):
-    print(mtx[i][10-i-1])"""
 mtx_final = mtx[:]
-
-for i in range(3):
-    mtx_final[i][i], mtx_final[3 - i - 1][i] = mtx_final[3 - i - 1][i],  mtx_final[i][i]
-print(mtx_final)
-
-
-
+for i in range(10):
+    mtx_final[i][i], mtx_final[10 - i - 1][i] = mtx_final[10 - i - 1][i],  mtx_final[i][i]
+print()
+print_matrix(mtx_final)

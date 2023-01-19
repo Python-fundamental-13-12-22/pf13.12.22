@@ -11,11 +11,13 @@ def generate_matrix(n=3, m=3, min_value=0, max_value=10):
         matrix.append(row)
     return matrix
 
+
 def print_matrix(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             print(matrix[i][j], end="\t")
         print()
+
 
 m_x = generate_matrix(3, 3, 3)
 print_matrix(m_x)
@@ -33,7 +35,5 @@ for i in range(1, 3):
 for i in range(3):
     m_x[i].append(list_1[i])
 m_x.append(list_j)
+print()
 print_matrix(m_x)
-
-
-
