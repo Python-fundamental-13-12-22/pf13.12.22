@@ -107,7 +107,7 @@ with open('out1.txt', 'w') as file:
 
 with open('out2.txt', 'w') as file:
     for key, value in output_temp_2.items():
-        file.write('%s,%s\n' % (key, value))
+        file.write('%s,%s\n' % (key.encode('utf8').decode('cp1251'), value.encode('utf8').decode('cp1251')))
     print(f' file out2.txt saved')
 
 
