@@ -99,7 +99,7 @@ for i in range(0,len(s)):
         phone_radio.answering = s[i][5]
         output_temp_2[phone.name] = phone_radio.answering
 output_temp['SUMM'] = summ
-
+print(type(phone))
 with open('out1.txt', 'w') as file:
     for key, value in output_temp.items():
         file.write('%s,%s\n' % (key, value))
