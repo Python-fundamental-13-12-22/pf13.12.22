@@ -10,17 +10,17 @@ class Person:
         self.age = age
         self.name = name
 
-    def сompare_age(self, other_person):
-
+    def compare_age(self, other_person):
         if self.age < other_person.age:
-            print(f"{other_person.age} is older than me")
-        if self.age > other_person.age:
-            print(f"{other_person.age} is younger than me")
-        if self.age == other_person.age:
-            print(f"{other_person.age} is the same age as me")
+            print(f"{other_person.name} is older than me")
+        elif self.age > other_person.age:
+            print(f"{other_person.name} is younger than me")
+        elif self.age == other_person.age:
+            print(f"{other_person.name} is the same age as me")
 
 
-p1 = Person('Me', 32)
+p1 = Person('Zoriana', 32)
 p2 = Person('Valeriy', 33)
-p3 = Person('Lubchuk', 38)
-print(p1.сompare_age(p2.age))
+p3 = Person('Ivan', 38)
+p1.compare_age(p2)
+p1.compare_age(p3)
