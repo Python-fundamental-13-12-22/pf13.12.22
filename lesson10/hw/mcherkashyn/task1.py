@@ -10,7 +10,6 @@ def Open_file(filename):
 file1 = Open_file("in1.txt")
 file2 = Open_file("in2.txt")
 matrix = file1 + file2
-#print(matrix)
 
 def Sort_out(matrix):
     sum = 0
@@ -41,3 +40,19 @@ Write_to_file(Sort_out(matrix), "out1.txt")
 Write_to_file(Radio_out(matrix), "out2.txt")
 #print(Sort_out(matrix))
 #print(Radio_out(matrix))
+
+class Phone():
+    def __init__(self, name, company, price):
+        self.name = name
+        self.company = company
+        self.price = price
+
+class Mobile_phone(Phone):
+    def __init__(self, color, memory):
+        self.color = color
+        self.memory = memory
+
+class Radio_phone(Phone):
+    def __init__(self, range, answering_machine):
+        self.range = range
+        self.answering_machine = answering_machine
