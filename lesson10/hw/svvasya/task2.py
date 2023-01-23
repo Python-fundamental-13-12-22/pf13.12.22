@@ -100,7 +100,7 @@ if k >= select_nabir[1]:
     nabir.chair = "стільці шт.: "
     print(nabir)
     with open('mebli_output.txt', 'w') as file:
-        file.write(str(nabir))
+        file.write(str(nabir).encode('utf8').decode('cp1251'))
         print(f' file mebli_output.txt saved')
 else:
     print(f'неможливо скласти набір ')
