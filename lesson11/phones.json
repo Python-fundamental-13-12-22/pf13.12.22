@@ -1,0 +1,72 @@
+[
+    {
+        "name": "name1",
+        "brand": "brand1",
+        "price": 100,
+        "color": "color1",
+        "memory_space": 1
+    },
+    {
+        "name": "name4",
+        "brand": "brand1",
+        "price": 100,
+        "radius_of_action": 5,
+        "answering_machine": true
+    },
+    {
+        "name": "name2",
+        "brand": "brand2",
+        "price": 200,
+        "color": "color2",
+        "memory_space": 2
+    },
+    {
+        "name": "name5",
+        "brand": "brand2",
+        "price": 200,
+        "radius_of_action": 15,
+        "answering_machine": true
+    },
+    {
+        "name": "name3",
+        "brand": "brand3",
+        "price": 300,
+        "color": "color3",
+        "memory_space": 3
+    },
+    {
+        "name": "name6",
+        "brand": "brand3",
+        "price": 300,
+        "radius_of_action": 25,
+        "answering_machine": false
+    },
+    {
+        "name": "name7",
+        "brand": "brand4",
+        "price": 400,
+        "color": "color4",
+        "memory_space": 4
+    },
+    {
+        "name": "name9",
+        "brand": "brand4",
+        "price": 400,
+        "radius_of_action": 30,
+        "answering_machine": false
+    },
+    {
+        "name": "name8",
+        "brand": "brand5",
+        "price": 500,
+        "color": "color5",
+        "memory_space": 5
+    },
+    {
+        "name": "name10",
+        "brand": "brand5",
+        "price": 500,
+        "radius_of_action": 40,
+        "answering_machine": true
+    }
+]
