@@ -1,38 +1,64 @@
 class Table:
-    def __init__(self, args):
-        self.size = args[1]
-        self.material = args[2]
-        self.price = args[3]
+    def __init__(self, classification, size, material, price):
+        self.classification = classification
+        self.size = size
+        self.material = material
+        self.price = price
 
     def __repr__(self):
         return f" table {self.size}, {self.material},{self.price}"
 
 
 class Chairs:
-    def __init__(self, args):
-        self.material = args[1]
-        self.price = args[2]
+    def __init__(self, classification, material, price):
+        self.classification = classification
+        self.material = material
+        self.price = price
 
     def __repr__(self):
         return f"chair {self.material}, {self.price}"
 
 
-class NabirMebliv:
-    def __init__(self, name="", table="", chair="", count_chair = 0 ):
+class Collections:
+    def __init__(self, name=None, table=None, chair=None, count_chair=0, total_price =0):
         self.name = name
         self.table = table
         self.chair = chair
         self.count_chair = count_chair
+        self.total_price = total_price
 
     def __repr__(self):
-        return f"Набір меблів: {self.name}, {self.table}, {self.chair}, {self.count_chair}"
+        return f"Collection: {self.name}, {self.table}, {self.chair}, {self.count_chair} {self.total_price=}"
 
 
-s = []
-with open("input.txt") as file:
-    for line in file:
-        line = list(line.replace(',', '').split())
-        s.append(line)
+def read_from_file(file_name):
+    collections_chairs = []
+    collections_tables = []
+    with open(file_name) as file:
+        for line in file:
+            line = [element.strip() for element in line.split(",")]
+            element = None
+            classification = line[0]
+            if classification == "chair":
+                material = line[1]
+                price = int(line[2])
+                element = Chairs(material=material,
+                                 price=price,
+                                 classification="chair")
+                collections_chairs.append(element)
+            elif classification == "table":
+                material = line[1]
+                size = line[2]
+                price = line[3]
+                element = Table(material=material,
+                                price=price,
+                                size=size,
+                                classification="table")
+                collections_tables.append(element)
+    return collections_tables, collections_chairs
+
+
+tables_collection, chairs_collection = read_from_file("input.txt")
 
 
 material = input("input material\n")
@@ -40,51 +66,62 @@ size = int(input("input size\n"))
 count_ch = int(input("input count chairs\n"))
 
 
-def create_nabir(s, material, size, count_ch):
+def creat_collections(chairs, tables, material, size, count_ch):
     k = 0
-    nabir = []
     total_price = 0
-    for i in range(0, len(s)):
-        if s[i][0] == "chair" and k<=count_ch and s[i][1] == material:
-            chair = Chairs(s[i])
-            nabir.append(chair)
-            k += k
-            total_price = int(chair.price) + total_price
-        if s[i][0] == "table" and s[i][1] == material and size == int(s[i][2]):
-            table = Table(s[i])
-            nabir.append(table)
-            total_price = int(table.price) + total_price
-    return nabir, total_price
+    collection = None
+    for elements in tables:
+        if elements.material == material and elements.size == size:
+            total_price += int(elements.price)
+    collection_chairs = []
+    for elements in chairs:
+        chair = None
+        if elements.material == material and k <= int(count_ch):
+            k = k + 1
+            total_price += int(elements.price)
+            chair = Chairs(classification=elements.classification,
+                           material=elements.material,
+                           price=elements.price)
+            collection_chairs.append(chair)
+    collection = Collections(name=material,
+                             table=size,
+                             count_chair=count_ch,
+                             chair=collection_chairs,
+                             total_price=total_price)
+
+    return collection
 
 
-nabir, total_price = create_nabir(s, material, size, count_ch)
-for i in range(0, len(nabir)):
-    with open("outfile1.txt", "a") as file:
-        file.write(f'{nabir[i]}\n')
-with open("outfile1.txt", "a") as file:
-    file.write(f'{total_price}\n')
+collection = creat_collections(chairs_collection, tables_collection, material, size, count_ch)
+with open("outfile1.txt", "w") as file:
+    file.write(f'{collection}\n')
 
 
-def create_nabir2(s, material, size, count_ch):
+def creat_collections2(chairs, tables, collection):
     k = 0
-    nabir = []
     total_price = 0
-    for i in range(0, len(s)):
-        if s[i][0] == "chair" and k<=count_ch and s[i][1] != material:
-            chair = Chairs(s[i])
-            nabir.append(chair)
-            k += k
-            total_price = int(chair.price) + total_price
-        if s[i][0] == "table" and material != s[i][1] and size == int(s[i][2]):
-            table = Table(s[i])
-            nabir.append(table)
-            total_price = int(table.price) + total_price
-    return nabir, total_price
+    for table in tables:
+        if table.material != collection.name:
+            total_price += int(table.price)
+            material = table.material
+    collection_chairs = []
+    for elements in chairs:
+        chair = None
+        if elements.material == material and k <= int(collection.count_chair):
+            k = k + 1
+            total_price += int(elements.price)
+            chair = Chairs(classification=elements.classification,
+                           material=elements.material,
+                           price=elements.price)
+            collection_chairs.append(chair)
+    collection1 = Collections(name=material,
+                             table=collection.table,
+                             count_chair=k,
+                             chair=collection_chairs,
+                             total_price=total_price)
+    return collection1
 
 
-nabir, total_price = create_nabir2(s, material, size, count_ch)
-for i in range(0, len(nabir)):
-    with open("outfile2.txt", "a") as file:
-        file.write(f'{nabir[i]}\n')
-with open("outfile2.txt", "a") as file:
-    file.write(f'{total_price}\n')
+c2 = (creat_collections2(chairs_collection, tables_collection, collection))
+with open("outfile2.txt", "w") as file:
+    file.write(f'{c2}\n')

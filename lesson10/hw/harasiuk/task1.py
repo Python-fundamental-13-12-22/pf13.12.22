@@ -1,67 +1,75 @@
 class Phone:
-    def __init__(self, list1):
-        self.name = list1[0]
-        self. brand = list1[1]
-        self.price = list1[2]
+    def __init__(self, name, brand, price):
+        self.name = name
+        self.brand = brand
+        self.price = price
+
+    def __repr__(self):
+        return f"{self.__class__.__name__} {self.name}"
 
 
 class MobilePhone(Phone):
-    def __init__(self, list1):
-        super().__init__(list1)
-        self.color = list1[3]
-        self.memory_space = list1[4]
+    def __init__(self, name, brand, price, color, memory_space):
+        super().__init__(name, brand, price)
+        self.color = color
+        self.memory_space = memory_space
+
+    def __str__(self):
+        return f"{self.name}, {self.brand}, {self.price}, {self.color}, {self.memory_space}"
 
 
 class RadioPhone(Phone):
-    def __init__(self, list1):
-        super().__init__(list1)
-        self.radius_of_action = list1[3]
-        self.answering_machine = list1[4]
+    def __init__(self, name, brand, price, radius_of_action, answering_machine):
+        super().__init__(name, brand, price)
+        self.radius_of_action = radius_of_action
+        self.answering_machine = answering_machine
+
+    def __str__(self):
+        return f"{self.name}, {self.brand}, {self.price}, {self.radius_of_action}, {self.answering_machine}"
 
 
-s = []
-with open("file1.txt") as file:
-    for line in file:
-        line = list(line.replace(',', '').split())
-        s.append(line)
-
-with open("file2.txt") as file:
-    for line in file:
-        line = list(line.replace(',', '').split())
-        s.append(line)
-
-
-def write_phone(i):
-    try:
-        int(s[i][4])
-    except ValueError:
-        radiophone = RadioPhone(s[i])
-        if s[i][4] == "Yes" or s[i][4] == "yes":
-            with open("out2.txt", "a") as file:
-                file.write(f"radiophone{i}: {radiophone.name=}, {radiophone.brand=}, {radiophone.price=}, {radiophone.radius_of_action=}, {radiophone.answering_machine=} \n")
-
-
-def sort(s):
-    for i in range(0, len(s)):
-        minimum = i
-        for j in range(i+1, len(s)):
-            if int(s[j][2]) < int(s[minimum][2]):
-                minimum = j
-                s[minimum], s[i] = s[i], s[minimum]
-    return s
-
-def write_1(s):
-    sum = 0
-    for i in range(0, len(s)):
-        sum = sum + int(s[i][2])
-        with open("out1.txt", "a") as file:
-            file.write(f'{s[i]}\n')
-    with open("out1.txt", "a") as file:
-        file.write(f"sum of price = {sum}")
+def read_from_file(file_name):
+    phones = []
+    with open(file_name) as file:
+        for line in file:
+            line = [element.strip() for element in line.split(",")]
+            phone = None
+            name = line[0]
+            brand = line[1]
+            price = int(line[2])
+            if line[3].isnumeric():
+                radius_of_action = int(line[3])
+                answering_machine = True if line[4] == "Yes" else False
+                phone = RadioPhone(name=name,
+                                   brand=brand,
+                                   price=price,
+                                   radius_of_action=radius_of_action,
+                                   answering_machine=answering_machine)
+            else:
+                color = line[3]
+                memory_space = int(line[4])
+                phone = MobilePhone(name=name,
+                                    brand=brand,
+                                    price=price,
+                                    color=color,
+                                    memory_space=memory_space)
+            phones.append(phone)
+    return phones
 
 
-sort(s)
-for i in range(0, len(s)):
-    write_phone(i)
+PHONES = read_from_file("file2.txt")
+PHONES += read_from_file("file1.txt")
+PHONES.sort(key=lambda phone: phone.price)
 
-write_1(s)
+
+def write_1(phones, file_name):
+    all_sum = 0
+    with open(file_name, "w") as file:
+        for phone in phones:
+            all_sum += phone.price
+            file.write(f'{phone}\n')
+        file.write(f"sum of price = {all_sum}\n")
+
+
+write_1(PHONES, "out1.txt")
+write_1([phone for phone in PHONES if type(phone) is RadioPhone and phone.answering_machine], "out2.txt")
