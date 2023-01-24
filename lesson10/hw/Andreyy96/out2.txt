@@ -1,0 +1,3 @@
+KX-TG1711UA, Panasonic, 1400, 400, Yes
+KX-TG2511UAT, Panasonic, 1500, 200, Yes
+KX-TGF320UCM, Panasonic, 4000, 500, Yes
