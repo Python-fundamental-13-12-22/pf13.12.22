@@ -1,0 +1,10 @@
+chair, pine, 300
+chair, pine, 300
+chair, pine, 300
+chair, pine, 300
+table, pine, 4, 100
+table oak, 4, 500
+chair, oak, 500
+chair, oak, 500
+chair, oak, 500
+chair, oak, 500

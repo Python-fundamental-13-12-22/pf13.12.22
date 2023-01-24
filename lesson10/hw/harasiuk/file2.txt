@@ -1,0 +1,5 @@
+name1, brand1, 100, 5, Yes
+name2, brand2, 200, 15, Yes
+name3, brand3, 300, 25, No
+name4, brand4, 400, 30, No
+name5, brand5, 500, 40, Yes

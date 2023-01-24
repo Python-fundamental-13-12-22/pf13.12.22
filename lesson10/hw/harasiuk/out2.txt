@@ -1,0 +1,3 @@
+radiophone1: radiophone.name='name1', radiophone.brand='brand1', radiophone.price='100', radiophone.radius_of_action='5', radiophone.answering_machine='Yes' 
+radiophone2: radiophone.name='name2', radiophone.brand='brand2', radiophone.price='200', radiophone.radius_of_action='15', radiophone.answering_machine='Yes' 
+radiophone9: radiophone.name='name5', radiophone.brand='brand5', radiophone.price='500', radiophone.radius_of_action='40', radiophone.answering_machine='Yes' 

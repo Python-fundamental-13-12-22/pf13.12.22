@@ -1,0 +1,6 @@
+ table oak, 4,500
+chair oak, 500
+chair oak, 500
+chair oak, 500
+chair oak, 500
+2500

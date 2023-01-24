@@ -1,0 +1,6 @@
+chair pine, 300
+chair pine, 300
+chair pine, 300
+chair pine, 300
+ table pine, 4,100
+1300
