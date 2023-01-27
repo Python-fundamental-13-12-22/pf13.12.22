@@ -1,146 +1,115 @@
-import json
-
-
 class Phone:
-    list_phone = []
 
-    def __init__(self, name='', brand='', price=0):
+    def __init__(self, name, brand, price):
         self.name = name
         self.brand = brand
         self.price = price
 
-    def add_dif_phone(self):
-        with open('Panasonic.txt', 'r') as file:
-            for line in file:
-                res = json.loads(line)
-                self.list_phone.append(res)
-                print(line, end="")
-            file.close()
-
-        with open("Apple.txt", 'r') as file:
-            for line in file:
-                res = json.loads(line)
-                self.list_phone.append(res)
-                print(line, end="")
-            file.close()
-
-    def sort_lst_phone(self):
-        self.list_phone.sort(key=lambda i: i[2])
-
-    def print_out1_txt_file(self):
-        value = 0
-        for i in range(len(self.list_phone)):
-            if type(self.list_phone[i][2]) == int:
-                value += self.list_phone[i][2]
-
-        f = open('out1.txt', 'wt')
-        for item in self.list_phone:
-            s = (', '.join(map(str, item))) + '\n'
-            s.split()
-            f.write(s)
-        f.write(f'Sum:{value}')
-        f.close()
+    def __repr__(self):
+        return f"{self.__class__.__name__} {self.name}"
 
 
 class MobilePhone(Phone):
 
-    def __init__(self, name='', brand='', price=0, color='', memory=''):
+    def __init__(self, name, brand, price, color, memory):
         super().__init__(name, brand, price)
         self.color = color
         self.memory = memory
 
     def __str__(self):
-        return f'MobilePhone: {self.name} {self.brand}, {self.price}, {self.color},  {self.memory}'
+        return f'{self.name}, {self.brand}, {self.price}, {self.color}, {self.memory}'
 
 
-class RadioTelephone(Phone):
+class RadioPhone(Phone):
 
-    def __init__(self, name='', brand='', price=0, radius=0, answering='No'):
+    def __init__(self, name, brand, price, radius_of_action, answering_machine):
         super().__init__(name, brand, price)
-        self.radius_of_action = radius
-        self.answering = answering
+        self.radius_of_action = radius_of_action
+        self.answering_machine = answering_machine
 
     def __str__(self):
-        return f'MobilePhone: {self.name} {self.brand}, {self.price}, {self.radius_of_action},  {self.answering}'
-
-    def print_out2_txt_file(self):
-        f = open('out2.txt', 'wt')
-        for i in range(len(self.list_phone)):
-            for j in range(len(self.list_phone[i])):
-                if self.list_phone[i][j] == 'True':
-                    s = (', '.join(map(str, self.list_phone[i]))) + '\n'
-                    f.write(s)
-        f.close()
+        return f"{self.name}, {self.brand}, {self.price}, {self.radius_of_action}, {self.answering_machine}"
 
 
-def add_dif_phone(list_phone):
-    with open('Panasonic.txt', 'r') as file:
+def read_from_file(file_name):
+    phones = []
+    with open(file_name) as file:
         for line in file:
-            line = line.strip()
-            list_row = line.split(', ')
-            list_phone.append(list_row)
-            print(line, end="\n")
+            phone = None
+            line = [element.strip() for element in line.split(",")]
+            name = line[0]
+            brand = line[1]
+            price = int(line[2])
+            if line[3].isnumeric():
+                radius_of_action = int(line[3])
+                answering_machine = True if line[4] == 'True' else False
+                phone = RadioPhone(name=name,
+                                   brand=brand,
+                                   price=price,
+                                   radius_of_action=radius_of_action,
+                                   answering_machine=answering_machine)
+            else:
+                color = line[3]
+                memory = int(line[4])
+                phone = MobilePhone(name=name,
+                                    brand=brand,
+                                    price=price,
+                                    color=color,
+                                    memory=memory)
+            phones.append(phone)
+        file.close()
+        return phones
+
+
+def sort_list(list_phone):
+    list_phone.sort(key=lambda phone: phone.price)
+
+
+def write_1(phones, file_name):
+    all_sum = 0
+    with open(file_name, "w") as file:
+        for phone in phones:
+            all_sum += phone.price
+            file.write(f'{phone}\n')
+        file.write(f"sum of price = {all_sum}\n")
+
+
+def write_2(phones, file_name):
+    with open(file_name, "w") as file:
+        for phone in phones:
+            print(type(phone))
+            if type(phone) is RadioPhone and phone.answering_machine:
+                file.write(f'{phone}\n')
         file.close()
 
-    with open("Apple.txt", 'r') as file:
-        for line in file:
-            line = line.strip()
-            list_row = line.split(', ')
-            list_phone.append(list_row)
-            print(line, end="\n")
-        file.close()
+
+def add_new_phone(new_phone):
+    list_phone.append(new_phone)
 
 
-def sort_lst_phone(list_phone):
-    list_phone.sort(key=lambda i: i[2])
+list_phone = read_from_file('Panasonic.txt')
+list_phone += read_from_file('Apple.txt')
 
+start = input('start: ')
+while start == 'l':
+    number = int(input(f'Введите номер класс 1 = MobilePhone, 2 = RadioPhone'))
+    name = input()
+    brand = input()
+    price = int(input())
+    if number <= 1:
+        color = input()
+        memory = int(input())
+        new_phone = MobilePhone(name, brand, price, color, memory)
+        print(new_phone)
+    else:
+        radius_of_action = int(input('Введиет радиус действия:'))
+        answering_machine = bool(input('Введите есть на радио телефоне автоответчик True или False: '))
+        new_phone = RadioPhone(name, brand, price, radius_of_action, answering_machine)
+        print(new_phone)
+    add_new_phone(new_phone)
+    start = input('again start: ')
 
-def get_sum_price(list_phone):
-    sum_price = 0
-    for i in range(len(list_phone)):
-        p.price = int(list_phone[i][2])
-        sum_price += p.price
+sort_list(list_phone)
 
-    return sum_price
-
-
-def print_out1_txt_file(list_phone, sum_price):
-
-    list_tel = []
-    for i in range(len(list_phone)):
-        p.name = list_phone[i][0]
-        p.brand = list_phone[i][1]
-        p.price = int(list_phone[i][2])
-        row = [p.name, p.brand, p.price]
-        list_tel.append(row)
-
-
-    f = open('out1.txt', 'wt')
-    for item in list_tel:
-        s = (', '.join(map(str, item))) + '\n'
-        s.split()
-        f.write(s)
-    f.write(f'Sum:{sum_price}')
-    f.close()
-
-
-def print_out2_txt_file(list_phone):
-    f = open('out2.txt', 'wt')
-    for i in range(len(list_phone)):
-        for j in range(len(list_phone[i])):
-            if list_phone[i][j] == 'Yes':
-                s = (', '.join(map(str, list_phone[i]))) + '\n'
-                f.write(s)
-    f.close()
-
-
-p = Phone()
-r = RadioTelephone()
-m = MobilePhone()
-list_phone = []
-
-add_dif_phone(list_phone)
-sort_lst_phone(list_phone)
-sum_price = get_sum_price(list_phone)
-print_out1_txt_file(list_phone, sum_price)
-print_out2_txt_file(list_phone)
+write_1(list_phone, 'out1.txt')
+write_2(list_phone, 'out2.txt')
