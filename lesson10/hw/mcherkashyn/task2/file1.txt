@@ -1,0 +1,1 @@
+Set name, [Table 60*40, wood, 100, Table 60*40, wood, 100], [Chair wood, 100, 0, Chair wood, 200, 0], Number of chairs: 2, Total price: 500$
