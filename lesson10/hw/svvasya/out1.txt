@@ -1,9 +1,9 @@
-M33 Motorola,1000
-M34 Motorola,1300
-M36 Motorola,1500
-V34 Motorola,1300
-A21 Samsung,15000
-A21s Samsung,11000
-A22 Samsung,23000
-S15 Samsung,10000
-SUMM,85100
+(M33, Motorola,1000,50 м,Yes) 
+(M34, Motorola,1300,100 м,No) 
+(V34, Motorola,1300,100 м,No) 
+(M36, Motorola,1500,3000 м,Yes) 
+(S15, Samsung,10000,зелений,False) 
+(A21s, Samsung,11000,сірий,False) 
+(A21, Samsung,15000,синій,False) 
+(A21, Samsung,21000,чорний,False) 
+(A22, Samsung,23000,червоний,False) 

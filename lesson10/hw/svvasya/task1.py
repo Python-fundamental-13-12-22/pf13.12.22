@@ -1,15 +1,13 @@
 class Phone:
-
-    def __init__(self, name="", brand="", price=0, type_phone=""):
+    def __init__(self, name="", brand="", price=0):
         self._name = name
         self._brand = brand
         self._price = price
-        self._type_phone = type_phone
     def find_radio(self):
         if self.type_phone == "радіотелефон":
             return True
     def __repr__(self):
-        return f"({self._name}, {self._brand},{self._price},{self._type_phone})"
+        return f"({self._name}, {self._brand},{self._price})"
     @property
     def name(self):
         return self._name
@@ -28,23 +26,18 @@ class Phone:
     @price.setter
     def price(self, price):
         self._price = price
-    @property
-    def type_phone(self):
-        return self._type_phone
-    @type_phone.setter
-    def type_phone(self, type_phone):
-        self._type_phone = type_phone
 class MobilePhone(Phone):
-    def __init__(self, name="", brand="", price=0, type_phone="", color="", memory=0):
-        super().__init__(name, brand, price, type_phone)
+    def __init__(self, name="", brand="", price=0, color="", memory='0'):
+        super().__init__(name, brand, price)
         self._color = color
         self._memory = memory
-
+    def __repr__(self):
+        return f"({self._name}, {self._brand},{self._price},{self._color},{self._memory})"
     @property
     def color(self):
         return self._color
     @color.setter
-    def name(self, color):
+    def color(self, color):
         self._color = color
     @property
     def memory(self):
@@ -53,15 +46,17 @@ class MobilePhone(Phone):
     def memory(self, memory):
         self._memory = memory
 class RadioPhone(Phone):
-    def __init__(self, name="", brand="", price=0, type_phone ="", radius=0, answering=False):
-        super().__init__(name, brand, price, type_phone)
+    def __init__(self, name="", brand="", price=0, radius=0, answering=""):
+        super().__init__(name, brand, price)
         self._radius = radius
         self._answering = answering
+    def __repr__(self):
+        return f"({self._name}, {self._brand},{self._price},{self._radius},{self._answering})"
     @property
     def radius(self):
         return self._radius
     @radius.setter
-    def name(self, radius):
+    def radius(self, radius):
         self._radius = radius
     @property
     def answering(self):
@@ -83,31 +78,43 @@ for line in inputFile:
     s.append(s_i)
 inputFile.close()
 
-phone = Phone()
-phone_radio = RadioPhone()
-output_temp = {}
-output_temp_2 = {}
-summ = 0
+phones_arr = []
 for i in range(0,len(s)):
-    phone.name = s[i][1]
-    phone.brand = s[i][2]
-    phone.price = s[i][3]
-    phone.type_phone = s[i][0]
-    output_temp[phone.name + " " + phone.brand] = int(phone.price)
-    summ += int(phone.price)
-    if phone.find_radio() == True:
-        phone_radio.answering = s[i][5]
-        output_temp_2[phone.name] = phone_radio.answering
-output_temp['SUMM'] = summ
-print(type(phone))
+    name = s[i][1]
+    brand = s[i][2]
+    price = s[i][3]
+    type_phone = s[i][0]
+
+    if type_phone == 'радіотелефон':
+        radius = s[i][4]
+        answering = ''.join(filter(str.isalnum,s[i][5] ))
+        phone = RadioPhone(name=name,
+                           brand=brand,
+                           price=price,
+                           radius=radius,
+                           answering=answering)
+
+    elif type_phone == 'мобільний телефон':
+        color = s[i][4]
+        memory = s[i][5].isalnum()
+        phone = MobilePhone(name=name,
+                            brand=brand,
+                            price=price,
+                            color=color,
+                            memory=memory)
+    phones_arr.append(phone)
+phones_arr.sort(key=lambda phone: int(phone.price))
+#print(phones_arr)
 with open('out1.txt', 'w') as file:
-    for key, value in output_temp.items():
-        file.write('%s,%s\n' % (key, value))
-    print (f' file out1.txt saved')
-
+   for phone in phones_arr:
+       file.write(f"{phone} \n")
+   print (f' file out1.txt saved')
+#print(phones_arr)
+answ_radiophone = [phone for phone in phones_arr if type(phone) is RadioPhone]
+#print(answ_radiophone)
 with open('out2.txt', 'w') as file:
-    for key, value in output_temp_2.items():
-        file.write('%s,%s\n' % (key.encode('utf8').decode('cp1251'), value.encode('utf8').decode('cp1251')))
-    print(f' file out2.txt saved')
-
-
+   for k in answ_radiophone:
+       #print(type(k.answering))
+       if k.answering == 'Yes':
+           file.write(f'{k} \n')
+   print(f' file out2.txt saved')
