@@ -1,2 +1,2 @@
-(M33, Motorola,1000,50 Ð¼,Yes) 
-(M36, Motorola,1500,3000 Ð¼,Yes) 
+(M33, Motorola,1000,50 ì,Yes) 
+(M36, Motorola,1500,3000 ì,Yes) 

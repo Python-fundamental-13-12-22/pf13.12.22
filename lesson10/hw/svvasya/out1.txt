@@ -2,8 +2,12 @@
 (M34, Motorola,1300,100 м,No) 
 (V34, Motorola,1300,100 м,No) 
 (M36, Motorola,1500,3000 м,Yes) 
-(S15, Samsung,10000,зелений,False) 
-(A21s, Samsung,11000,сірий,False) 
-(A21, Samsung,15000,синій,False) 
-(A21, Samsung,21000,чорний,False) 
-(A22, Samsung,23000,червоний,False) 
+(S15, Samsung,10000,зелений,32 √б
+) 
+(A21s, Samsung,11000,с≥рий,64 √б
+) 
+(A21, Samsung,15000,син≥й,64 √б) 
+(A21, Samsung,21000,чорний,32 √б
+) 
+(A22, Samsung,23000,червоний,128 √б
+) 

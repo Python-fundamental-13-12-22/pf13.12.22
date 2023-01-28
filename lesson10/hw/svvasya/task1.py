@@ -96,7 +96,7 @@ for i in range(0,len(s)):
 
     elif type_phone == 'мобільний телефон':
         color = s[i][4]
-        memory = s[i][5].isalnum()
+        memory = s[i][5]
         phone = MobilePhone(name=name,
                             brand=brand,
                             price=price,
