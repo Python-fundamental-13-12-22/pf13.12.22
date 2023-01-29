@@ -60,7 +60,6 @@ class Nabir_mebliv(Chair,Table):
         self.material = material
         return [size, count, material]
 
-
 inputFile = open("mebli_input.txt", "r")
 s = []
 for line in inputFile:
@@ -87,20 +86,27 @@ for i in range(0,len(s)):
         tables_ar.append(tables)
 nabir = Nabir_mebliv()
 k = 0
+price_t = 0
 # вхідні дані
 select_nabir = nabir.create_nabir('2х1м',4,'дуб')
 for table in tables_ar:
     if type(table) is Table and select_nabir[0] == table.size and select_nabir[2] == table.material:
         nabir.name = 'Набір стіл і стільці '
         nabir.tabl = 'Стіл' + ' ' + table.material + ' ' + table.size + ' ----- '
+        price_t += int(str(table.price).split(' ')[0])
+        print(price_t)
+price_ch = 0
 for chairs in chairs_ar:
     if type(chairs) is Chair and select_nabir[2] == chairs.material:
         k = k + 1
+        price_ch += int(str(chairs.price).split(' ')[0])
+
 if k >= select_nabir[1]:
+    price_n = price_t + price_ch
     nabir.chair = "стільці "+ select_nabir[2] +", шт.: "
     print(nabir)
     with open('mebli_output.txt', 'w') as file:
-        file.write(str(nabir).encode('utf8').decode('cp1251'))
+        file.write(str(nabir) + ', ціна набору ' + str(price_n) + 'грн.' )
         print(f' file mebli_output.txt saved')
 else:
     with open('mebli_output.txt', 'w') as file:
