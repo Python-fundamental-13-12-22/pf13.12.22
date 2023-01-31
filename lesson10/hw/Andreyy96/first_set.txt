@@ -1,1 +1,1 @@
-SetFurniture: Result = [Table, 150*90, wood, 4500], [Chair, wood, 2000, Chair, wood, 2000, Chair, wood, 2000, Chair, wood, 2000], 4, 12500
+SetFurniture: Result = [Table, 120*80, wood, 5000], [Chair, wood, 2000, Chair, wood, 2000, Chair, wood, 2000, Chair, wood, 2000, Chair, wood, 2000], 5, 15000

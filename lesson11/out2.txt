@@ -1,0 +1,40 @@
+name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800name4, brand1, 100, 5, True
+name5, brand2, 200, 15, True
+name10, brand5, 500, 40, True
+sum of price = 800

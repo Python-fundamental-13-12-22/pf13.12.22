@@ -32,7 +32,8 @@ class FurnitureSet:
 
     def __str__(self):
         return f'SetFurniture: {self.name} {self.table}, {self.chair}, {self.count_chairs}, {self.sum_price}'
-
+    def get_price(self):
+        pass
 
 def read_from_file(file_name):
     list_furniture = []
@@ -125,17 +126,74 @@ def creat_second_set_furniture(list_furniture, material, first_set_furniture, si
 
     return set_furniture2
 
+#
+# list_furniture = read_from_file('TablesAndChairs.txt')
+#
+# material = input("Введите материал wood или steel: ")
+# size = input("Введите размер стола: 120*80 или 150*90: ")
+# count_ch = int(input("input count chairs 1 - 6"))
+#
+# first_set_furniture = creat_set_furniture(list_furniture, size, count_ch)
+# with open("first_set.txt", "w") as file:
+#     file.write(f'{first_set_furniture}\n')
+#
+# second_set_furniture = creat_second_set_furniture(list_furniture, material, first_set_furniture, size)
+# with open("full_set.txt", "w") as file:
+#     file.write(f'{second_set_furniture}\n')
+
+
+class FurnitureSet:
+
+    def __init__(self, name='', table=None, chair=None):
+        self.name = name
+        self.table = table
+        self.chair = chair if chair else []
+
+    def __str__(self):
+        return f'SetFurniture: {self.name} <{self.table}>, <{len(self.chair)} {self.chair}> {self.get_price()}'
+    def __repr__(self):
+        return f'<{self.name}, {self.table.material}, {len(self.chair)}>'
+    def get_price(self):
+        return self.table.price + sum(chair.price for chair in self.chair)
 
 list_furniture = read_from_file('TablesAndChairs.txt')
 
-material = input("Введите материал wood или steel: ")
-size = input("Введите размер стола: 120*80 или 150*90: ")
-count_ch = int(input("input count chairs 1 - 6"))
 
-first_set_furniture = creat_set_furniture(list_furniture, size, count_ch)
-with open("first_set.txt", "w") as file:
-    file.write(f'{first_set_furniture}\n')
+material = "wood" #input("Введите материал wood или steel: ")
+size = "120*80" #input("Введите размер стола: 120*80 или 150*90: ")
+count_ch = 5 #int(input("input count chairs 1 - 6: "))
 
-second_set_furniture = creat_second_set_furniture(list_furniture, material, first_set_furniture, size)
-with open("full_set.txt", "w") as file:
-    file.write(f'{second_set_furniture}\n')
+furnitureSet = FurnitureSet(name="task1")
+for index, element in enumerate(list_furniture):
+    if type(element) is Table:
+        if element.size == size and element.material == material:
+            furnitureSet.table = element
+            del list_furniture[index]
+            break
+for index, element in enumerate(list_furniture):
+    if type(element) is Chair:
+        if element.material == material and len(furnitureSet.chair) < count_ch:
+            furnitureSet.chair.append(element)
+            del list_furniture[index]
+print(furnitureSet)
+print(list_furniture)
+print()
+print(list_furniture)
+tables = [element for element in list_furniture if type(element) is Table]
+print(tables)
+chairs = [element for element in list_furniture if type(element) is Chair]
+print(chairs)
+furniture_sets = []
+for i, table in enumerate(tables):
+    fs = FurnitureSet(name=f"fs_{i+1}", table=table)
+    for chair in chairs:
+        if chair.material == table.material and len(fs.chair) < 4:
+            fs.chair.append(chair)
+    for chair in fs.chair:
+        chairs.remove(chair)
+
+    furniture_sets.append(fs)
+
+print(tables)
+print(chairs)
+print(furniture_sets)
