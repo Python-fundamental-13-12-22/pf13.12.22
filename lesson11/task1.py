@@ -76,10 +76,10 @@ def write_1(phones, file_name):
             all_sum += phone.price
             file.write(f'{phone}\n')
         file.write(f"sum of price = {all_sum}")
-write_1(PHONES, "out1.txt")
+write_1(PHONES, "brand1_phones.json")
 
 write_1([phone for phone in PHONES if type(phone) is RadioPhone and phone.answering_machine],
-        "out2.txt")
+        "brand2_phones.json")
 import json
 j = json.dumps(PHONES, indent=4, cls=PhoneEncoder)
 # j = json.dumps(PHONES[0], indent=4, cls=PhoneEncoder)
