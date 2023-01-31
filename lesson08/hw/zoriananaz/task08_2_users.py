@@ -13,7 +13,7 @@ class User:
         print(f"Hello, {self.first_name} {self.last_name}!")
 
     def increment_login_attempts(self):
-        self.login_attempts = self.login_attempts + 1
+        self.login_attempts += 1
 
     def reset_login_attempts(self):
         self.login_attempts = 0
@@ -33,12 +33,14 @@ print(user.login_attempts)
 
 
 class Admin(User):
-    def __init__(self, first_name, last_name, age, sex, privileges=["Allowed to add message", "Allowed to delete users", "«Allowed to ban users"]):
+    privileges = ["Allowed to add message", "Allowed to delete users", "Allowed to ban users"]
+
+    def __init__(self, first_name, last_name, age, sex):
         super().__init__(self, first_name, last_name, age, sex)
-        self.privileges = privileges
 
     def show_privileges(self):
-        print(f"{self.privileges}")
+        for i in self.privileges:
+            print(i)
 
 
 adm = Admin("Petro", "Petrenko", 24, "male")
@@ -46,16 +48,13 @@ adm.show_privileges()
 
 
 class Privileges:
-    def __init__(self, privileges):
-        self.privileges = privileges
+    privileges = Admin.privileges
 
     def show_privileges(self):
         for privilege in self.privileges:
-            print(f"{privilege}")
+            print(privilege)
 
 
-privileges = ["Allowed to add message", "Allowed to delete users", "«Allowed to ban users"]
-
-priv = Admin()
-print(priv)
-
+print()
+priv = Privileges()
+priv.show_privileges()
