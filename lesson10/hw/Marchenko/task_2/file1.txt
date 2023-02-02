@@ -1,0 +1,1 @@
+Set 5, [], [Chair wood, 100, 0, Chair wood, 200, 0, Chair wood, 200, 0], Number of chairs: 3, Total price: 500$
