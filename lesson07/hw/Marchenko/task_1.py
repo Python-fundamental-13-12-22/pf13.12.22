@@ -1,21 +1,20 @@
-class Person():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def compare_age(self):
-        #print(self.age)
-        if self.age > Me.age:
-            result = "older than"
-        elif self.age < Me.age:
-            result = "younger than"
-        elif self.age == Me.age:
-            result = "the same age as"
-        return (f"{self.name} is {result} me")
+class Person:
+my_age = 25
 
-p1 = Person("Ihor", 28)
-p2 = Person("Egor", 10)
-p3 = Person("Vlad", 22)
+def init(self, name, age):
+self.name = name
+self.age = age
 
-Me = Person("Stas", 22)
-
-print(p3.compare_age())
+def compare_age(self, other_person):
+if self.age > other_person.age:
+print(f"{self.name} is older than as me.")
+elif self.age < other_person.age:
+print(f"{self.name} is younger than me.")
+else:
+print(f"{self.name} is the same age as me.")
+p1 = Person("Andriy", 18)
+p2 = Person("Andriy1", 20)
+p3 = Person("Andriy2", 19)
+p2.compare_age(p1)
+p2.compare_age(p3)
+p1.compare_age(p1)
