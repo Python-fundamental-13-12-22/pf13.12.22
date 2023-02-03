@@ -1,0 +1,7 @@
+name1, brand1, 100, 5, True
+name1, brand1, 100, 5, True
+name2, brand2, 200, 15, True
+name2, brand2, 200, 15, True
+name5, brand5, 500, 40, True
+name5, brand5, 500, 40, True
+sum of price = 1600
