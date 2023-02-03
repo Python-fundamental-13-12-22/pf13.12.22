@@ -1,0 +1,5 @@
+Galaxy_A10, Samsung, 100, 10, True
+Pixel, Google, 100, 5, False
+Pixel 3, Google, 200, White, 64
+Galaxy_S10, Samsung, 300, Black, 128
+Total price = 700$

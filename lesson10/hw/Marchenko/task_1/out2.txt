@@ -1,0 +1,1 @@
+Galaxy_A10, Samsung, 100, 10, True
