@@ -1,0 +1,10 @@
+60*40, wood, 100
+65*40, ceramic, 850
+160*40, wood, 300
+95*110, metal, 600
+60*40, wood, 100
+wood, 100
+metal, 400
+wood, 200
+metal, 1000
+wood, 200
