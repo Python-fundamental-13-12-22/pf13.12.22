@@ -1,0 +1,22 @@
+Table, 120*80, steel, 6000
+Table, 120*80, wood, 5000
+Table, 150*90, steel, 5500
+Table, 150*90, wood, 4500
+Table, 150*90, glass, 4500
+Chair, steel, 1500
+Chair, steel, 1500
+Chair, steel, 1500
+Chair, steel, 1500
+Chair, steel, 1500
+Chair, steel, 1500
+Chair, wood, 2000
+Chair, wood, 2000
+Chair, wood, 2000
+Chair, wood, 2000
+Chair, wood, 2000
+Chair, wood, 2000
+Chair, glass, 2500
+Chair, glass, 2500
+Chair, glass, 2500
+Chair, glass, 2500
+Chair, glass, 2500

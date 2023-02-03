@@ -1,0 +1,12 @@
+KX-TG1711UA, Panasonic, 1400, 400, True
+KX-TG2511UAT, Panasonic, 1500, 200, True
+KX-TG6821UAB, Panasonic, 2500, 300, False
+KX-TGF320UCM, Panasonic, 4000, 500, False
+KX-TCA285RU, Panasonic, 5300, 500, True
+Iphone 9, Apple, 34000, Red, 128
+Iphone 12, Apple, 63000, White, 128
+Iphone 12 Pro, Apple, 80000, Yellow, 128
+Iphone 13, Apple, 85000, Blue, 256
+Iphone 14, Apple, 100000, Red, 256
+Iphone 14 Pro, Apple, 130000, Yellow, 256
+sum of price = 506700
