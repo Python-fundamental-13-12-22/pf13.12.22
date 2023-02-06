@@ -4,6 +4,7 @@ from sqlalchemy.orm.decl_api import declarative_base
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.sql.schema import Column, ForeignKey
 from sqlalchemy.sql.sqltypes import Integer, String
+from sqlalchemy import or_
 
 dialect = "postgresql"
 driever = "psycopg2"
@@ -143,7 +144,7 @@ def card_filter(sub_word):
     cards = tuple(session.query(Card).filter(or_(
         Card.word.ilike(f"%{sub_word}%"),
         Card.tip.ilike(f"%{sub_word}%"),
-        Card.translation.ilike(f"%{sub_word}%"),
+        Card.translation.ilike(f"%{sub_word}%")
     )).all())
     return cards
 
