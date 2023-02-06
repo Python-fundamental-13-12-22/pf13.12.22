@@ -1,0 +1,2 @@
+Mobile_phone, Galaxy_S10, Samsung, 300, Black, 128
+Radio_phone, Galaxy_A10, Samsung, 100, 10, Yes

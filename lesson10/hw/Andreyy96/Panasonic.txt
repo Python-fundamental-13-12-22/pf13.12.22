@@ -1,0 +1,5 @@
+KX-TCA285RU, Panasonic, 5300, 500, True
+KX-TG2511UAT, Panasonic, 1500, 200, True
+KX-TG6821UAB, Panasonic, 2500, 300, False
+KX-TG1711UA, Panasonic, 1400, 400, True
+KX-TGF320UCM, Panasonic, 4000, 500, False

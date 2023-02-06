@@ -1,0 +1,2 @@
+Mobile_phone, Pixel 3, Google, 200, White, 64
+Radio_phone, Pixel, Google, 100, 5, No

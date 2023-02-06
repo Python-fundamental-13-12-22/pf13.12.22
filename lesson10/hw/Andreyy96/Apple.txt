@@ -1,0 +1,6 @@
+Iphone 12 Pro, Apple, 80000, Yellow, 128
+Iphone 13, Apple, 85000, Blue, 256
+Iphone 9, Apple, 34000, Red, 128
+Iphone 12, Apple, 63000, White, 128
+Iphone 14 Pro, Apple, 130000, Yellow, 256
+Iphone 14, Apple, 100000, Red, 256

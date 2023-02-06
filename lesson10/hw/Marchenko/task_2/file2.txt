@@ -1,0 +1,1 @@
+[Table 65*40, ceramic, 850, Table 95*110, metal, 600, Chair metal, 400, 0, Chair metal, 1000, 0, Table 60*40, wood, 100, Table 160*40, wood, 300, Table 60*40, wood, 100, Chair wood, 100, 0, Chair wood, 200, 0, Chair wood, 200, 0]

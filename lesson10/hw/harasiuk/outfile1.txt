@@ -1,0 +1,1 @@
+Collection: oak, 4, [chair oak, 500, chair oak, 500], 1 self.total_price=1000
