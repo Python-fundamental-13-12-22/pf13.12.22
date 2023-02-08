@@ -1,0 +1,1 @@
+Furniture is [Table 120 glass 2600] [Chair glass 250, Chair glass 250, Chair glass 250] 3350 $

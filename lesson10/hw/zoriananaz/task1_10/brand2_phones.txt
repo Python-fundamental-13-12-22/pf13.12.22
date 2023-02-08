@@ -1,0 +1,5 @@
+P20,Panasonic, 200, red, 2
+R45,Panasonic,200,15, yes
+P23,Panasonic,300,yellow,3
+R43,Panasonic,300, 25,no
+P21,Panasonic,400,blue, 4

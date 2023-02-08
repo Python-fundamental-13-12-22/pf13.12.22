@@ -1,0 +1,11 @@
+R2 Sumsung 100 5 False
+S21 Sumsung 200 black 10
+R3 Sumsung 200 15 True
+P20 Panasonic 200 red 2
+R45 Panasonic 200 15 True
+P23 Panasonic 300 yellow 3
+R43 Panasonic 300 25 False
+P21 Panasonic 400 blue 4
+S23 Sumsung 500 green 2
+S24 Sumsung 800 red 3
+Sum of price is 3200

@@ -1,0 +1,2 @@
+R3 Sumsung 200 15 True
+R45 Panasonic 200 15 True
