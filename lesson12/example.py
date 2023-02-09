@@ -7,10 +7,10 @@ from sqlalchemy.sql.sqltypes import Integer, String
 
 dialect = "postgresql"
 username = "postgres"
-password = "root"
+password = "19341934"
 host = "localhost"
 port = "5432"
-database = "pf131222"
+database = "pf13"
 # https://docs.sqlalchemy.org/en/20/core/engines.html
 engine = create_engine(f"{dialect}://{username}:{password}@{host}:{port}/{database}")
 Session = sessionmaker(bind=engine)
