@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("user_create")}} method="post">
+<input name="name" type="text"></input>
+<input name="email" type="text"></input>
+<input name="password" type="text"></input>
+<button>add</button>
+</form>
+
+{%endblock%}

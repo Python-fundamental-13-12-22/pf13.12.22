@@ -8,7 +8,7 @@ username = "postgres"
 password = "root"
 host = "localhost"
 port = "5432"
-database = "project"
+database = "project1"
 try:
     from local_settings import *
 except:
@@ -19,13 +19,11 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"{dialect}://{username}:{password}@{host}:{port}/{database}"
 db = SQLAlchemy(app)
 
-
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
     name = db.Column(db.String)
-    email = db.Column(db.String)
     password = db.Column(db.String)
 
     def __init__(self, name, email, password):
@@ -183,7 +181,24 @@ def user_delete_by_id(user_id):
 def home():
     return render_template('home.html')
 
+@app.route('/user/<int:user_id>')
+def get_user_id(user_id):
+    user = user_get_by_id(user_id)
+    if user:
+        return render_template('user/user_info.html', user=user)
+    return render_template('home.html')
 
+
+@app.route('/user/create', methods=["POST", "GET"])
+def user_create():
+    if request.method == "GET":
+        return render_template('user/user_create.html')
+    if request.method == "POST":
+        email = request.form["email"]
+        name = request.form["name"]
+        password = request.form["password"]
+        user = user_create(name, email, password)
+        return redirect(url_for("get_user_id", user_id=user.id))
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
