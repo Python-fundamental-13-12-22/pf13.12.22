@@ -25,6 +25,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String)
     username = db.Column(db.String)
+    # password = db.Column(db.String)
     age = db.Column(db.Integer)
 
     def __init__(self, email, username, age):
@@ -36,7 +37,7 @@ class User(db.Model):
         return f"{self.id} {self.email}"
 
     def __str__(self):
-        return f"{self.id} {self.email} {self.username} {self.books}"
+        return f"{self.id} {self.email} {self.username}"
 
     @classmethod
     def get_by_id(cls, id):
@@ -54,6 +55,20 @@ class User(db.Model):
         db.session.add(user)
         db.session.commit()
         return user
+    def update(self, email, username, age):
+        self.email = email
+        self.username = username
+        self.age = age
+        db.session.add(self)
+        db.session.commit()
+        return self
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception as error:
+            print(error)
+        return self
 
 
 @app.route('/')
@@ -72,6 +87,23 @@ def get_user_id(user_id):
     user = User.get_by_id(user_id)
     if user:
         return render_template('user/user_info.html', user=user)
+    return render_template('home.html')\
+
+@app.route('/user/<int:user_id>/edit', methods=["POST", "GET"])
+def user_update(user_id):
+    user = User.get_by_id(user_id)
+    if not user:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('user/user_edit.html', user=user)
+    if request.method == "POST":
+        email = request.form["email"]
+        username = request.form["username"]
+        age = request.form["age"]
+
+        user.update(email, username, age)
+        return redirect(url_for("get_user_id", user_id=user.id))
+
     return render_template('home.html')
 
 
@@ -84,7 +116,14 @@ def user_create():
         username = request.form["username"]
         age = request.form["age"]
         user = User.create(email, username, age)
-        return redirect(url_for("get_user_id", user_id=user.id))
+        return redirect(url_for("get_user_id", user_id=user.id))@app.route('/user/create', methods=["POST", "GET"])
+@app.route('/user/<int:user_id>/delete')
+def user_delete(user_id):
+    user = User.get_by_id(user_id)
+    if not user:
+        return render_template('error.html')
+    user.delete()
+    return redirect("/user")
 
 
 if __name__ == "__main__":
