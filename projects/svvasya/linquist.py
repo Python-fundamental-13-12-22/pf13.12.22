@@ -8,12 +8,11 @@ from sqlalchemy import create_engine, event
 import string
 import secrets
 
-dialect = "mysql+pymysql"
-username = "**************"
-password = "**********"
-host = "************"
-port = "3306"
-database = "**********"
+try:
+    from local_settings import *
+except:
+    print("can't find local_settings")
+
 # https://docs.sqlalchemy.org/en/20/core/engines.html
 engine = create_engine(f"{dialect}://{username}:{password}@{host}:{port}/{database}")
 Session = sessionmaker(bind=engine)
@@ -25,6 +24,8 @@ class User(Base):
     name = Column(String(16), index=True)
     email = Column(String(16), index=True)
     password = Column(String(12), index=True)
+
+
     def __repr__(self):
         return f"{self.id} {self.name} {self.email} "
     def __str__(self):
@@ -158,7 +159,7 @@ def card_delete_by_id(card_id):
 #email = input('email: ')
 #password = generate_password()
 #user_create(name, email, password)
-#print(user_get_by_id(2))
+print(user_get_by_id(2))
 #user_update_name(1, "Taras++update")
 #print(user_update_name(2, "Vas++update"))
 #user_change_password(1, '1111111', 'ndwnwdnwj777')
