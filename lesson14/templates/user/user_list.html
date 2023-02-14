@@ -5,14 +5,14 @@
     <button> Create user</button>
     </a>
 
-<table border="1">
+<table class="table">
     <thead>
     <tr>
-        <th>id</th>
-        <th>email</th>
-        <th>username</th>
-        <th>age</th>
-        <th></th>
+        <th scope="col">id</th>
+        <th scope="col">email</th>
+        <th scope="col">username</th>
+        <th scope="col">age</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,55 @@
             <td>{{user.email}}</td>
             <td>{{user.username}}</td>
             <td>{{user.age}}</td>
-            <td><a href="/user/{{user.id}}">info</a></td>
+            <td>
+                <div>
+<!--                    <a href="/user/{{user.id}}">info</a>-->
+                    <a href={{ url_for("get_user_id", user_id=user.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+<!--                    <a href="/user/{{user.id}}/edit">edit</a>-->
+                    <a href={{ url_for("user_update", user_id=user.id)}}>
+                        <button type="button" class="btn btn-success">edit</button>
+                    </a>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{user.id}}">
+                      delete
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{user.id}}
+                                </div>
+                                <div>
+                                    name:{{user.email}}
+                                </div>
+                                <div>
+                                    username: {{user.username}}
+                                </div>
+                                <div>
+                                    age: {{user.age}}
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href={{ url_for("user_delete", user_id=user.id)}}>
+                                <button type="button" class="btn btn-success">delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
         </tr>
      {%endfor%}
 
