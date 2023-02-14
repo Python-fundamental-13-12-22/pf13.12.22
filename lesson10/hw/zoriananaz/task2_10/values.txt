@@ -1,0 +1,11 @@
+chair, wood, 260
+chair, wood, 260
+chair, wood, 260
+chair, wood, 260
+chair, glass, 250
+chair, glass, 250
+chair, glass, 250
+table, 120, glass, 2600
+table, 110, glass, 2400
+table, 120, wood, 2300
+table, 110, wood, 2600
