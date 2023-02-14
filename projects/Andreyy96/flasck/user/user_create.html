@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{%block content%}
+<h3 style="text-align:center;">Form create user</h3>
+<form action={{ url_for('user_create')}} method="post" style="text-align:center;">
+     <div>
+        <label for="name">Name: <abbr title="You need too write without special characters">*</abbr></label>
+         <div><input type="text" name="name"  placeholder="Name"></input></div>
+    </div>
+    <div>
+        <label for="email">Email: <abbr title="name@domain.com">*</abbr></label>
+        <div><input type="text" name="email" placeholder="Email"></input></div>
+    </div>
+    <div>
+        <label for="password">Password: <abbr title="Password must be at least 8 characters long and
+        contain at least two digits">*</abbr></label>
+        <div><input type="text" name="password" placeholder="Password"></input></div>
+    </div>
+<hr>
+<button>add</button>
+</form>
+
+{%endblock%}
