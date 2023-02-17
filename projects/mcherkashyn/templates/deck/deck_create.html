@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("deck_create")}} method="post">
+name
+<input name="name" type="text"></input>
+user_id
+<input name="user_id" type="number"></input>
+<button>add</button>
+</form>
+
+{%endblock%}

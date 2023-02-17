@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+</head>
+<body>
+<div style="background-color:rgb(184, 255, 126); border: 2px solid black;">
+    <a href={{ url_for('home') }} >
+    <button> Home</button>
+    </a>
+    <a href={{ url_for('user') }} >
+    <button> user</button>
+    </a>
+    <a href={{ url_for('deck') }} >
+    <button> deck</button>
+    </a>
+    <a href={{ url_for('card') }} >
+    <button> card</button>
+    </a>
+</div>
+<hr>
+
+
+{%block content%}
+{%endblock%}
+</body>
+</html>

@@ -1,0 +1,5 @@
+S21, Sumsung, 200, black, 10
+R2, Sumsung, 100, 5, no
+S23, Sumsung, 500, green, 2
+R3, Sumsung, 200, 15, yes
+S24, Sumsung,800, red,3

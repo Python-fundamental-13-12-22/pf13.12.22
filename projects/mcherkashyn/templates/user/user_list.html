@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{%block content%}
+    <a href={{ url_for("user_create") }} >
+    <button> Create user</button>
+    </a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>password</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for user in users %}
+        <tr>
+
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.password}}</td>
+            <td><a href="/user/{{user.id}}">info</a></td>
+        </tr>
+     {%endfor%}
+
+    </tbody>
+</table>
+{%endblock%}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{%block content%}
+<div>
+    id: {{card['id']}}
+</div>
+<div>
+    user: {{card['user'].name}}
+
+</div>
+<div>
+   word: {{card['word']}}
+</div>
+<div>
+   translation: {{card['translation']}}
+</div>
+<div>
+   tip: {{card['tip']}}
+</div>
+{%endblock%}

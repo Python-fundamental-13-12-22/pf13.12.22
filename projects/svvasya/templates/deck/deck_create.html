@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{%block content%}
+<div class="form-create">
+<form action={{ url_for("deck_create")}} method="post">
+  <div class="mb-3">
+    <label  class="form-label">Name</label>
+    <input type="text" class="form-control"  aria-describedby="emailHelp" name="name">
+    <div  class="form-text">Input Deck name.</div>
+  </div>
+<div class="mb-3">
+    <label  class="form-label">User</label>
+    <span class="input-group-addon">Please select</span>
+            <select name="user_id" class="selectpicker form-control">
+            {% for o in users %}
+                <option value="{{o.id }}">{{ o.name }}</option>
+            {% endfor %}
+            </select>
+
+</div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+
+{%endblock%}

@@ -119,7 +119,7 @@ def user_delete_by_id(user_id):
         user = session.query(User).filter(User.id == user_id).first()
         if user is not None:
             print(f"{user.id}.{user.name} ({user.password})")
-            session.deleted(user)
+            session.delete(user)
             print(f"{user.id}.{user.name} ({user.password})")
             session.commit()
             return True
@@ -135,7 +135,7 @@ def deck_create(name, user_id):
     session.commit()
 
 
-def deck_get_by_id_(deck):
+def deck_get_by_id(deck):
     with session:
         deck = session.query(Deck).filter(Deck.id == deck.id).first()
         if deck is not None:
@@ -161,7 +161,7 @@ def deck_delete_by_id(deck_id):
         deck = session.query(Deck).filter(Deck.id == deck_id).first()
         if deck is not None:
             print(f"{deck.id}.{deck.name}")
-            session.deleted(deck)
+            session.delete(deck)
             print(f"{deck.id}.{deck.name}")
             session.commit()
             return True
@@ -217,7 +217,7 @@ def card_delete_by_id(card_id):
         card = session.query(Card).filter(Card.id == card_id).first()
         if card is not None:
             print(f"{card.id}, {card.word}, {card.translation}, {card.tip}")
-            session.deleted(card)
+            session.delete(card)
             print(f"{card.id}, {card.word}, {card.translation}, {card.tip}")
             session.commit()
             return True
@@ -247,32 +247,6 @@ user_change_password(user_id, 'root', '1234')
 user_delete_by_id(3)
 print(User)
 
-#start = input('Операция c user: д ')
-#while start == 'д':
-#    number = int(input('1=create_user, 2=get_id_user, 3=update_name, 4=change_password, 5=del_by_id_user '))
-#    if number == 1:
-#        name = input('name ')
-#        email = input('email ')
-#        password = input('password ')
-#        create_user(name, email, password)
-#    elif number == 2:
-#        users = session.query(User).all()
-#        for u in users:
-#            print(f'{u.id}: {u.name}')
-#        id_user = int(input('id_user '))
-#        user = session.query(User).filter(User.id == id_user).first()
-#        user_id = get_by_id_user(user)
-#    elif number == 3:
-#        name = input('введите новый name ')
-#        user_update_name(user_id, name)
-#    elif number == 4:
-#        old_password = input('old_password ')
-#        new_password = input('new_password ')
-#        user_change_password(user_id, old_password, new_password)
-#    elif number == 5:
-#        user_delete_by_id(user_id)
-#    start = input('Продолжить операцию c user: д ')
-
 # Deck------------------------------------------------------------
 deck_create('name', 1)
 deck_create('good', 2)
@@ -283,7 +257,7 @@ for d in decks:
     print(f'{d.id}: {d.name}')
 id_deck = int(input('id_deck '))
 deck = session.query(Deck).filter(Deck.id == id_deck).first()
-deck_id = get_by_id_user(deck)
+deck_id = deck_get_by_id(deck)
 
 deck_update(deck_id, 'deck1')
 
