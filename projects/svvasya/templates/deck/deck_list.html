@@ -14,7 +14,39 @@
     <td>{{deck['name']}}</td>
     <td>{{deck['user_id']}}</td>
     <td>{{deck['user'].name}}</td>
-    <td><a href="/deck/{{deck.id}}">info</a></td>
+    <td><a class="btn btn-outline-success" href="/deck/{{deck.id}}">info</a> <a href="/deck/{{deck.id}}/edit" class="btn btn-outline-secondary">edit</a> <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{deck.id}}">delete</button>
+
+
+         <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{deck.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{deck.id}}
+                                </div>
+                                <div>
+                                    name:{{deck.name}}
+                                </div>
+
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                             <a href="/deck/delete/{{deck.id}}">
+                                <button type="button" class="btn btn-outline-danger">delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+    </td>
     </tr>
 
 {%endfor%}

@@ -72,7 +72,13 @@ class User(db.Model):
         db.session.delete(user)
         db.session.commit()
         return user
-
+    def update(self, email, name, age):
+        self.email = email
+        self.name = name
+        self.age = age
+        db.session.add(self)
+        db.session.commit()
+        return self
 
 class Deck(db.Model):
     __tablename__ = "decks"
@@ -92,6 +98,7 @@ class Deck(db.Model):
     @classmethod
     def get_by_id(self,id):
         deck = db.session.query(Deck).filter(Deck.id == id).first()
+
         return deck
     @classmethod
     def get_all(cls):
@@ -103,6 +110,18 @@ class Deck(db.Model):
         db.session.add(deck)
         db.session.commit()
         return deck
+    @classmethod
+    def delete_deck(self, deck_id):
+        deck = Deck.query.filter_by(id=deck_id).first()
+        db.session.delete(deck)
+        db.session.commit()
+        return deck
+    def update(self, name,user_id):
+        self.name = name
+        self.user_id = user_id
+        db.session.add(self)
+        db.session.commit()
+        return self
 
 class Card(db.Model):
     __tablename__ = "cards"
@@ -133,11 +152,34 @@ class Card(db.Model):
         return card
 
     @classmethod
-    def create(self,user_id, word,translation,tip):
+    def create(cls,user_id, word,translation,tip):
         card = Card(user_id,word,translation,tip)
         db.session.add(card)
         db.session.commit()
         return card
+    @classmethod
+    def delete_card(self, card_id):
+        card = Card.query.filter_by(id=card_id).first()
+        db.session.delete(card)
+        db.session.commit()
+        return card
+    def update(self, user_id, word, translation, tip):
+        self.user_id = user_id
+        self.word = word
+        self.translation = translation
+        self.tip = tip
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    @classmethod
+    def card_filter(cls,sub_word):
+        cards =  db.session.query(Card).filter(Card.word.like("{}%".format(sub_word)))
+        #db.session.query(Card).filter(Card.word.like(sub_word)) or db.session.query(Card).filter(
+         #   Card.translation.like(sub_word))
+        return cards
+
+
 @app.route("/")
 def home():
     return render_template('home.html')
@@ -175,6 +217,22 @@ def user_delete(user_id):
     else:
         result = render_template('user/user_404.html', title="User 404")
     return result
+
+@app.route('/user/<int:user_id>/edit', methods=["POST", "GET"])
+def user_update(user_id):
+    user = User.get_by_id(user_id)
+    if not user:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('user/user_edit.html', user=user)
+    if request.method == "POST":
+        email = request.form["email"]
+        username = request.form["name"]
+        age = request.form["age"]
+        user.update(email, username, age)
+        return redirect(url_for("get_user_id", user_id=user.id))
+
+    return render_template('home.html')
 @app.route("/deck")
 def deck():
     deck_list = Deck.get_all()
@@ -197,7 +255,29 @@ def deck_create():
         user_id = request.form["user_id"]
         deck = Deck.create(name,user_id)
         return redirect(url_for("get_deck_by_id", deck_id=deck.id))
-
+@app.route('/deck/delete/<deck_id>')
+def deck_delete(deck_id):
+    deck = Deck.delete_deck(deck_id)
+    if deck:
+        deck_list = Deck.get_all()
+        result = render_template('deck/deck_list.html', decks=deck_list)
+    else:
+        result = render_template('deck/deck_404.html', title="Deck 404")
+    return result
+@app.route('/deck/<int:deck_id>/edit', methods=["POST", "GET"])
+def deck_update(deck_id):
+    deck = Deck.get_by_id(deck_id)
+    if not deck:
+        return render_template('deck/deck_404.html')
+    if request.method == "GET":
+        users = User.get_all()
+        return render_template('deck/deck_edit.html', deck=deck, users = users)
+    if request.method == "POST":
+        name = request.form["name"]
+        user_id = request.form["user_id"]
+        deck.update(name,user_id)
+        return redirect(url_for("get_deck_by_id", deck_id=deck.id))
+    return render_template('home.html')
 @app.route("/card")
 def card():
     card_list = Card.get_all()
@@ -224,6 +304,41 @@ def card_create():
         user_id = request.form["user_id"]
         card = Card.create(user_id,word,translation,tip)
         return redirect(url_for("get_card_by_id", card_id=card.id))
+
+@app.route('/card/delete/<card_id>')
+def card_delete(card_id):
+    card = Card.delete_card(card_id)
+    if card:
+        card_list = Card.get_all()
+        result = render_template('card/card_list.html', cards=card_list)
+    else:
+        result = render_template('card/card_404.html', title="Card 404")
+    return result
+@app.route('/card/<int:card_id>/edit', methods=["POST", "GET"])
+def card_update(card_id):
+    card = Card.get_by_id(card_id)
+    if not card:
+        return render_template('card/card_404.html')
+    if request.method == "GET":
+        users = User.get_all()
+        return render_template('card/card_edit.html', card=card, users = users)
+    if request.method == "POST":
+        word = request.form["word"]
+        translation = request.form["translation"]
+        tip = request.form["tip"]
+        user_id = request.form["user_id"]
+        card.update(user_id, word, translation, tip)
+        return redirect(url_for("get_card_by_id", card_id=card.id))
+    return render_template('home.html')
+@app.route("/card/filter/", methods=["POST", "GET"])
+def get_card_filter():
+    card_list = Card.get_all()
+    if request.method == "GET":
+        return render_template('card/card_list.html', cards=card_list, title="Card list")
+    if request.method == "POST":
+        sub_word = request.form["sub_word"]
+        card_list = Card.card_filter(sub_word)
+        return render_template('card/card_list.html', cards=card_list, title="Card list filter")
 
 
 
