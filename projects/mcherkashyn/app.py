@@ -52,6 +52,26 @@ class User(db.Model):
         db.session.commit()
         return user
 
+    def update(self, name):
+        self.name = name
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def change_password(self, password):
+        self.password = password
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception as error:
+            print(error)
+        return self
+
 
 
 class Deck(db.Model):
@@ -86,6 +106,20 @@ class Deck(db.Model):
         db.session.add(deck)
         db.session.commit()
         return deck
+
+    def update(self, name):
+        self.name = name
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception as error:
+            print(error)
+        return self
 
 
 
@@ -126,6 +160,24 @@ class Card(db.Model):
         db.session.commit()
         return card
 
+    def update(self, word, translation, tip):
+        self.word = word
+        self.translation = translation
+        self.tip = tip
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception as error:
+            print(error)
+        return self
+
+
+
 
 
 @app.route('/')
@@ -160,6 +212,50 @@ def user_create():
         return redirect(url_for("get_user_id", user_id=user.id))
 
 
+@app.route('/user/<int:user_id>/edit_name', methods=["POST", "GET"])
+def user_update_name(user_id):
+    user = User.get_by_id(user_id)
+    if not user:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('user/user_update_name.html', user=user)
+    if request.method == "POST":
+        name = request.form["name"]
+        user.update(name)
+        return redirect(url_for("get_user_id", user_id=user.id))
+    else:
+        return render_template('error.html')
+
+    return render_template('home.html')
+
+
+@app.route('/user/<int:user_id>/change_password', methods=["POST", "GET"])
+def user_change_password(user_id):
+    user = User.get_by_id(user_id)
+    password = user.password
+    if not user:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('user/user_change_password.html', user=user)
+    if request.method == "POST":
+        old_password = request.form["old_password"]
+        new_password = request.form["new_password"]
+        if old_password == password:
+            user.change_password(new_password)
+            return redirect(url_for("get_user_id", user_id=user.id))
+    else:
+        return render_template('error.html')
+
+    return render_template('home.html')
+
+
+@app.route('/user/<int:user_id>/delete')
+def user_delete_by_id(user_id):
+        user = User.get_by_id(user_id)
+        if not user:
+            return render_template('error.html')
+        user.delete()
+        return redirect("/user")
 
 
 
@@ -168,12 +264,14 @@ def deck():
     decks_list = Deck.get_all()
     return render_template('deck/deck_list.html', decks=decks_list)
 
+
 @app.route('/deck/<int:deck_id>')
 def get_deck_id(deck_id):
     deck = Deck.get_by_id(deck_id)
     if deck:
         return render_template('deck/deck_info.html', deck=deck)
     return render_template('home.html')
+
 
 @app.route('/deck/create', methods=["POST", "GET"])
 def deck_create():
@@ -186,9 +284,31 @@ def deck_create():
                 deck = Deck.create(name, user_id)
                 return redirect(url_for("get_deck_id", deck_id=deck.id))
     except:
-        return render_template('no_userid_error.html')
+        return render_template('error.html')
 
 
+@app.route('/deck/<int:deck_id>/edit_name', methods=["POST", "GET"])
+def deck_update_name(deck_id):
+    deck = Deck.get_by_id(deck_id)
+    if not deck:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('deck/deck_update_name.html', deck=deck)
+    if request.method == "POST":
+        name = request.form["name"]
+        deck.update(name)
+        return redirect(url_for("get_deck_id", deck_id=deck.id))
+    else:
+        return render_template('error.html')
+
+
+@app.route('/deck/<int:deck_id>/delete')
+def deck_delete_by_id(deck_id):
+    deck = Deck.get_by_id(deck_id)
+    if not deck:
+        return render_template('error.html')
+    deck.delete()
+    return redirect("/deck")
 
 
 
@@ -197,12 +317,14 @@ def card():
     cards_list = Card.get_all()
     return render_template('card/card_list.html', cards=cards_list)
 
+
 @app.route('/card/<int:card_id>')
 def get_card_id(card_id):
     card = Card.get_by_id(card_id)
     if card:
         return render_template('card/card_info.html', card=card)
     return render_template('home.html')
+
 
 @app.route('/card/create', methods=["POST", "GET"])
 def card_create():
@@ -217,7 +339,35 @@ def card_create():
                 card = Card.create(user_id, word, translation, tip)
                 return redirect(url_for("get_card_id", card_id=card.id))
     except:
-        return render_template('no_userid_error.html')
+        return render_template('error.html')
+
+
+@app.route('/card/<int:card_id>/update', methods=["POST", "GET"])
+def card_update(card_id):
+    card = Card.get_by_id(card_id)
+    if not card:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('card/card_update.html', card=card)
+    if request.method == "POST":
+        word = request.form["word"]
+        translation = request.form["translation"]
+        tip = request.form["tip"]
+        card.update(word, translation, tip)
+        return redirect(url_for("get_card_id", card_id=card.id))
+    else:
+        return render_template('error.html')
+
+
+@app.route('/card/<int:card_id>/delete')
+def card_delete_by_id(card_id):
+    card = Card.get_by_id(card_id)
+    if not card:
+        return render_template('error.html')
+    card.delete()
+    return redirect("/card")
+
+
 
 
 

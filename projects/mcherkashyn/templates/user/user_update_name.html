@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("user_update_name", user_id=user.id)}} method="post">
+    <div class="mb-3">
+        <input name="name" type="text" value={{user.name}}></input>
+    </div>
+    <button type="submit" class="btn btn-primary">update</button>
+</form>
+
+{%endblock%}

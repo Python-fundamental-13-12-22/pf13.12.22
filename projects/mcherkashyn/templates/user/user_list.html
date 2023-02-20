@@ -5,25 +5,76 @@
     <button> Create user</button>
     </a>
 
-<table border="1">
+<table class="table">
     <thead>
     <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>email</th>
-        <th>password</th>
-        <th></th>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">email</th>
+        <th scope="col">password</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
      {% for user in users %}
         <tr>
-
             <td>{{user.id}}</td>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.password}}</td>
-            <td><a href="/user/{{user.id}}">info</a></td>
+            <td>
+                <div>
+<!--                    <a href="/user/{{user.id}}">Info</a>-->
+                    <a href={{ url_for("get_user_id", user_id=user.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+<!--                    <a href="/user/{{user.id}}/edit_name">Edit name</a>-->
+                    <a href={{ url_for("user_update_name", user_id=user.id)}}>
+                        <button type="button" class="btn btn-success">Edit name</button>
+                    </a>
+<!--                    <a href="/user/{{user.id}}/user_change_password">change</a>-->
+                    <a href={{ url_for("user_change_password", user_id=user.id)}}>
+                        <button type="button" class="btn btn-success">Change password</button>
+                    </a>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{user.id}}">
+                      Delete
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{user.id}}
+                                </div>
+                                <div>
+                                    name:{{user.name}}
+                                </div>
+                                <div>
+                                    email: {{user.email}}
+                                </div>
+                                <div>
+                                    password: {{user.password}}
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href={{ url_for("user_delete_by_id", user_id=user.id)}}>
+                                <button type="button" class="btn btn-success">Delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
         </tr>
      {%endfor%}
 

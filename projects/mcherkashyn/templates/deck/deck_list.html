@@ -5,13 +5,13 @@
     <button> Create deck</button>
     </a>
 
-<table border="1">
+<table class="table">
     <thead>
     <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>user_id</th>
-        <th></th>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">user_id</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +21,52 @@
             <td>{{deck.id}}</td>
             <td>{{deck.name}}</td>
             <td>{{deck.user_id}}</td>
-            <td><a href="/deck/{{deck.id}}">info</a></td>
+            <td>
+                <div>
+<!--                    <a href="/deck/{{deck.id}}">Info</a>-->
+                    <a href={{ url_for("get_deck_id", deck_id=deck.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+<!--                    <a href="/deck/{{deck.id}}/edit_name">Edit name</a>-->
+                    <a href={{ url_for("deck_update_name", deck_id=deck.id)}}>
+                        <button type="button" class="btn btn-success">Edit name</button>
+                    </a>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{deck.id}}">
+                      Delete
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{deck.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{deck.id}}
+                                </div>
+                                <div>
+                                    name:{{deck.name}}
+                                </div>
+                                <div>
+                                    user_id: {{deck.user_id}}
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href={{ url_for("deck_delete_by_id", deck_id=deck.id)}}>
+                                <button type="button" class="btn btn-success">Delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
         </tr>
      {%endfor%}
 
