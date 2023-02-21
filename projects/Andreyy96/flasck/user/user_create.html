@@ -2,22 +2,21 @@
 
 {%block content%}
 <h3 style="text-align:center;">Form create user</h3>
-<form action={{ url_for('user_create')}} method="post" style="text-align:center;">
-     <div>
-        <label for="name">Name: <abbr title="You need too write without special characters">*</abbr></label>
-         <div><input type="text" name="name"  placeholder="Name"></input></div>
+<form action={{ url_for('user_create')}} method="post" style="text-align:center;>
+     <div class="mb-3">
+        <label for="name" class="form-label">Name <abbr title="You need too write without special characters">*</abbr></label>
+         <div><input type="text" class="form-control" name="name"  placeholder="Name"></input></div>
     </div>
-    <div>
-        <label for="email">Email: <abbr title="name@domain.com">*</abbr></label>
-        <div><input type="text" name="email" placeholder="Email"></input></div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email <abbr title="name@domain.com">*</abbr></label>
+        <div><input type="text" class="form-control" name="email" placeholder="Email"></input></div>
     </div>
-    <div>
-        <label for="password">Password: <abbr title="Password must be at least 8 characters long and
+    <div class="mb-3">
+        <label for="password" class="form-label">Password <abbr title="Password must be at least 8 characters long and
         contain at least two digits">*</abbr></label>
-        <div><input type="text" name="password" placeholder="Password"></input></div>
+        <div><input type="text" class="form-control" name="password" placeholder="Password"></input></div>
     </div>
-<hr>
-<button>add</button>
+    <p><button>add</button></p>
 </form>
 
 {%endblock%}

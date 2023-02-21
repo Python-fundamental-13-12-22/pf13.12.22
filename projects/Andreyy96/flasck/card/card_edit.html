@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("card_update", card_id=card.id)}} method="post" style="text-align:left;>
+    <div class="mb-3">
+         <div><label class="form-label" for="user_id">User ID</label></div>
+        <input name="user_id" class="form-control" type="number" value={{card.user_id}}></input>
+    </div>
+    <div class="mb-3">
+        <div><label class="form-label" for="word">Word</label></div>
+        <input name="word" class="form-control" type="text" value={{card.word}}></input>
+    </div>
+    <div class="mb-3">
+        <div><label class="form-label" for="translation">Translation</label></div>
+        <input name="translation" class="form-control" type="text" value={{card.translation}}></input>
+    </div>
+    <div class="mb-3">
+        <div><label class="form-label" for="tip">Tip</label></div>
+        <input name="tip" class="form-control" type="text" value={{card.tip}}></input>
+    </div>
+    <button type="submit" class="btn btn-primary">update</button>
+</form>
+
+{%endblock%}

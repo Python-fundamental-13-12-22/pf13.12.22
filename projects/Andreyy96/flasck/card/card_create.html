@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{%block content%}
+<h3 style="text-align:center;">Form create card</h3>
+<form action={{ url_for('card_create')}} method="post"  style="text-align:center;">
+     <div class="mb-3">
+        <label for="user_id"  class="form-label">User ID: <abbr title="You need too write User ID">*</abbr></label>
+         <div><input type="number"  class="form-control" name="user_id"  placeholder="User ID"></input></div>
+    </div>
+    <div class="mb-3">
+        <label for="word" class="form-label">Word: <abbr title="write english word">*</abbr></label>
+        <div><input type="text"  class="form-control" name="word" placeholder="Word"></input></div>
+    </div>
+    <div class="mb-3">
+        <label for="translation" class="form-label">Translation: <abbr title="Write translation on russian">*</abbr></label>
+        <div><input type="text"  class="form-control" name="translation" placeholder="Translation"></input></div>
+    </div>
+    <div class="mb-3">
+        <label for="tip" class="form-label">Tip: <abbr title="Write tip">*</abbr></label>
+        <div><input type="text"  class="form-control" name="tip" placeholder="Tip"></input></div>
+    </div>
+    <p><button>add</button></p>
+</form>
+
+{%endblock%}
