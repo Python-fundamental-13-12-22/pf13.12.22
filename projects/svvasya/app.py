@@ -6,6 +6,7 @@ from sqlalchemy import Integer, ForeignKey
 from sqlalchemy import String
 import string
 import secrets
+from sqlalchemy import or_
 
 from sqlalchemy.orm import backref
 
@@ -174,7 +175,7 @@ class Card(db.Model):
 
     @classmethod
     def card_filter(cls,sub_word):
-        cards =  db.session.query(Card).filter(Card.word.like("{}%".format(sub_word)))
+        cards =  db.session.query(Card).filter(Card.word.like("{}%".format(sub_word))|Card.translation.like(sub_word)|Card.word.like(sub_word))
         #db.session.query(Card).filter(Card.word.like(sub_word)) or db.session.query(Card).filter(
          #   Card.translation.like(sub_word))
         return cards
