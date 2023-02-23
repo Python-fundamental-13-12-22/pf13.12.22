@@ -1,0 +1,12 @@
+html,
+body {
+  height: 100%;
+}
+h2 { position: center;
+ margin: 20;
+  top: 50%;
+  left: 50%;
+}
+a:active {
+  color: blue;
+}

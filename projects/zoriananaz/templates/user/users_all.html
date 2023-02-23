@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+<link href="styles.css" rel="stylesheet" media="all"/>
+
+{%block body%}
+
+    <a href="/users_all/{user.id}">  </a><br>
+<h2>Users</h2>
+
+<table class="users">
+    <thead>
+            <td>id</td>
+            <td>name</td>
+            <td>email</td>
+            <td>click</td>
+    </thead>
+
+<tbody>
+ {% for user in users %}
+        <tr>
+
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+
+            <td>
+                    <a href={{url_for("get_user_id", user_id=user.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+                 <a href={{url_for("update_user", user_id=user.id)}}>
+                        <button type="button" class="btn btn-info">Update</button>
+                    </a>
+                <a href={{url_for("delete_user", user_id=user.id)}}>
+                        <button type="button" class="btn btn-info">Delete</button>
+                    </a>
+            </td>
+        </tr>
+
+{%endfor%}
+</tbody>
+  </table>
+<style>
+html,
+body {
+  height: 100%;
+}
+h2 { position: center;
+ margin: 20;
+  top: 50%;
+  left: 50%;
+}
+body {
+  margin: 0;
+  background: linear-gradient(45deg, #49a09d, #5f2c82);
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+.users {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+  padding: 15px;
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+th {
+  text-align: center;
+}
+
+thead {
+  th {
+    background-color: #55608f;
+  }
+}
+
+tbody {
+  tr {
+    &:hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255,255,255,0.2);
+        z-index: -1;
+      }
+    }
+  }
+}
+</style>
+
+{% endblock %}

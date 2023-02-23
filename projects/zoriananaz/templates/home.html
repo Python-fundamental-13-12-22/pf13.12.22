@@ -1,0 +1,41 @@
+ {%block body%}
+<a href={{url_for("create_user")}} methods="post">
+ <button> Create account</button>
+</a>
+ <a href={{url_for("get_users")}}>
+ <button> Users</button>
+</a>
+<a href={{url_for("create_deck")}} methods="post">
+ <button> Create deck</button>
+</a>
+ <a href={{url_for("get_all_decks")}} >
+ <button> All decks</button>
+</a>
+ <a href={{url_for("create_card")}} methods="post">
+ <button> Create card</button>
+</a>
+ <a href={{url_for("get_all_cards")}} methods="post">
+ <button> Cards</button>
+</a>
+ {%endblock%}
+ <style>
+ /* unvisited link */
+a:link {
+  color: red;
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
+ </style>

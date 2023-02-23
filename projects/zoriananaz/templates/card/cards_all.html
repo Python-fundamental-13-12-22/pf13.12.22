@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%block body%}
+<h2>Cards</h2>
+ {% for card in cards %}
+    <a href="/cards_all/{card.id}">  </a><br>
+<table id="cards">
+    <thead>
+            <td>id</td>
+            <td>user_id</td>
+            <td>word</td>
+            <td>translation</td>
+            <td>tip</td>
+            <td>topic</td>
+    </thead>
+<tbody>
+
+        <tr>
+
+            <td>{{card.id}}</td>
+            <td>{{card.user_id}}</td>
+            <td>{{card.word}}</td>
+            <td>{{card.translation}}</td>
+            <td>{{card.tip}}</td>
+            <td>{{card.topic}}</td>
+            <td>
+                 <td>
+                    <a href={{url_for("card_get_id", card_id=card.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+                     <a href={{url_for("update_card", card_id=card.id)}}>
+                        <button type="button" class="btn btn-info">Update</button>
+                    </a>
+                <a href={{url_for("card_delete", card_id=card.id)}}>
+                        <button type="button" class="btn btn-info">Delete</button>
+                    </a>
+            </td>
+        </tr>
+</tbody>
+
+</table>
+ {%endfor%}
+ {%endblock%}

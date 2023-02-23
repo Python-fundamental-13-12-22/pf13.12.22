@@ -8,7 +8,7 @@ from sqlalchemy import or_
 
 dialect = "postgresql"
 username = "postgres"
-password = "******"
+password = "pink"
 host = "localhost"
 port = "5432"
 database = "linguo"
