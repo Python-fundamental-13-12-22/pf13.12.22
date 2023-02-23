@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {%block content%}
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline"  action={{ url_for("get_card_filter")}} method="post">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Filter</span>
+      </div>
+      <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1" name="sub_word">
+    </div>
+  </form>
+</nav>
 <table class="table table-striped">
     <tr>
         <th>id</th>
@@ -18,7 +28,37 @@
     <td>{{card['word']}}</td>
     <td>{{card['translation']}}</td>
     <td>{{card['tip']}}</td>
-    <td><a href="/card/{{card.id}}">info</a></td>
+    <td><a class="btn btn-outline-success" href="/card/{{card.id}}">info</a> <a href="/card/{{card.id}}/edit" class="btn btn-outline-secondary">edit</a> <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{card.id}}">delete</button>
+
+
+         <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{card.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{card.id}}
+                                </div>
+                                <div>
+                                    word:{{card.word}}
+                                </div>
+
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                             <a href="/card/delete/{{card.id}}">
+                                <button type="button" class="btn btn-outline-danger">delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+</td>
     </tr>
 
 {%endfor%}
