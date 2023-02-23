@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{%block content%}
+<h3 style="text-align:center;">Form create deck</h3>
+<form action={{ url_for('deck_create')}} method="post" style="text-align:center;">
+    <div class="mb-3">
+        <label for="name"  class="form-label">Name: <abbr title="You need too write without special characters">*</abbr></label>
+        <div><input type="text" class="form-control" name="name"  placeholder="Name"></input></div>
+    </div>
+    <div class="mb-3">
+        <label for="user_id"  class="form-label">User ID: <abbr title="You need too write number">*</abbr></label>
+        <div><input type="number" class="form-control" name="user_id" placeholder="User ID"></input></div>
+    </div>
+    <p><button>add</button></p>
+</form>
+
+{%endblock%}

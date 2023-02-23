@@ -1,22 +1,38 @@
 {% extends "base.html" %}
+<style>
+table {
+  border-collapse: collapse;
+  width: 15%;
+  border: 1px solid #ddd;
+}
 
+th, td {
+  text-align: center;
+
+.modal-body {
+text-align: left;
+}
+</style>
 {%block content%}
-    <h4>Information card {{card.id}}</h4>
-
-<div>
-    id: {{card.id}}
-</div>
-<div>
-    id_user: {{card.id_user}}
-</div>
-<div>
-    word: {{card.word}}
-</div>
-<div>
-    translation: {{card.translation}}
-</div>
-<div>
-    tip: {{card.tip}}
-</div>
+<table class="table table-striped" id="info-table" border="1">
+  <tr>
+    <th colspan="2"><p>Information card ID:{{card.id}}</p></th>
+  </tr>
+  <tr>
+    <th>user_id</th>
+    <td>{{card.user_id}}</td>
+  </tr>
+  <tr>
+    <th>word</th>
+    <td>{{card.word}}</td>
+  </tr>
+  <tr>
+    <th>translation</th>
+    <td>{{card.translation}}</td>
+  </tr>
+    <th>tip</th>
+    <td>{{card.tip}}</td>
+  </tr>
+</table>
 
 {%endblock%}

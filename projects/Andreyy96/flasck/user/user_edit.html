@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("user_update", user_id=user.id)}} method="post" style="text-align:left;>
+    <div class="mb-3">
+         <div><label for="email" class="form-label">Email</label></div>
+        <input name="email" class="form-control" type="text" value={{user.email}}></input>
+    </div>
+    <div class="mb-3">
+        <div><label for="username" class="form-label">Username</label></div>
+        <input name="username" class="form-control" type="text" value={{user.username}}></input>
+    </div>
+    <div class="mb-3">
+        <div><label for="password" class="form-label">Password</label></div>
+        <input name="password" class="form-control" type="text" value={{user.password}}></input>
+    </div>
+    <button type="submit" class="btn btn-primary">update</button>
+</form>
+
+{%endblock%}

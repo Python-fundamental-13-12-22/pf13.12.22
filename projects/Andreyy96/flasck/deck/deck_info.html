@@ -1,16 +1,32 @@
 {% extends "base.html" %}
+<style>
+table {
+  border-collapse: collapse;
+  width: 15%;
+  border: 1px solid #ddd;
+}
 
+th, td {
+  text-align: center;
+
+.modal-body {
+text-align: left;
+}
+</style>
 {%block content%}
-    <h4>Information deck {{deck.id}}</h4>
+<table class="table table-striped" id="info-table" border="1">
+  <tr>
+    <th colspan="2"><p>Information deck ID:{{deck.id}}</p></th>
+  </tr>
+  <tr>
+    <th>name</th>
+    <td>{{deck.name}}</td>
+  </tr>
+  <tr>
+    <th>user_id</th>
+    <td>{{deck.user_id}}</td>
+  </tr>
+</table>
 
-<div>
-    id: {{deck.id}}
-</div>
-<div>
-    name: {{deck.name}}
-</div>
-<div>
-    id_user: {{deck.id_user}}
-</div>
 
 {%endblock%}

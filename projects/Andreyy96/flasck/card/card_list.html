@@ -1,12 +1,64 @@
 {% extends "base.html" %}
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: center;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.modal-body {
+text-align: left;
+}
+
+.info {
+  border-color: #2196F3;
+  color: dodgerblue;
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+.success {
+  border-color: #4CAF50;
+  color: green;
+}
+
+.success:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.danger {
+  border-color: #f44336;
+  color: red;
+}
+
+.danger:hover {
+  background: #f44336;
+  color: white;
+}
+</style>
 
 {%block content%}
-    <a href={{ url_for('card_create') }} >
-    <button>Create card</button>
-    </a>
+<a href={{ url_for('card_create') }} >
+<button>Create card</button>
+</a>
 
-<h3>Card list</h3>
-<table border="1">
+<h1 style="text-align:center;">Card list</h1>
+<input class="form-control" type="text" placeholder="Id, user_id, word, translation, tip" id="search-text" onkeyup="tableSearch()">
+<button onclick="sortTable()">Sort word</button>
+<table class="table table-striped" id="info-table" border="1">
     <thead>
     <tr>
         <th>id</th>
@@ -14,22 +66,106 @@
         <th>word</th>
         <th>translation</th>
         <th>tip</th>
-        <th>link</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
-     {% for card in cards %}
+      {% for card in cards %}
         <tr>
             <td>{{card.id}}</td>
             <td>{{card.user_id}}</td>
             <td>{{card.word}}</td>
             <td>{{card.translation}}</td>
             <td>{{card.tip}}</td>
-            <td><a href="/card/{{card.id}}">info</a></td>
-        </tr>
-    {%endfor%}
+            <td>
+                <div>
+                    <a href={{ url_for("get_card_id", card_id=card.id)}}><button type="button" class="btn info">Info</button></a>
+                    <a href={{ url_for("card_update", card_id=card.id)}}><button type="button" class="btn success">edit</button></a>
+                    <button type="button" class="btn danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{user.id}}">
+                        delete
+                    </button>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h3 class="modal-title fs-5" id="exampleModalLabel">Delete card</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{card.id}}
+                                </div>
+                                <div>
+                                    word:{{card.word}}
+                                </div>
+                                <div>
+                                    translation: {{card.translation}}
+                                </div>
+                                <div>
+                                    tip: {{card.tip}}
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <a href={{ url_for("card_delete", card_id=card.id)}}>
+                              <button type="button" class="btn btn-success">delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+      {%endfor%}
     </tbody>
 </table>
+<script>
+    function tableSearch() {
+    var phrase = document.getElementById('search-text');
+    var table = document.getElementById('info-table');
+    var regPhrase = new RegExp(phrase.value, 'i');
+    var flag = false;
+    for (var i = 1; i < table.rows.length; i++) {
+        flag = false;
+        for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+            flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+            if (flag) break;
+        }
+        if (flag) {
+            table.rows[i].style.display = "";
+        } else {
+            table.rows[i].style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("info-table");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
 {%endblock%}
 
