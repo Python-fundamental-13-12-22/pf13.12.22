@@ -5,27 +5,87 @@
     <button> Create card</button>
     </a>
 
-<table border="1">
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline"  action={{ url_for("cards_filter")}} method="post">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Filter</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Input and press Enter" aria-label="Username" aria-describedby="basic-addon1" name="sub_word">
+    </div>
+  </form>
+</nav>
+<table class="table">
     <thead>
     <tr>
-        <th>id</th>
-        <th>user_id</th>
-        <th>word</th>
-        <th>translation</th>
-        <th>tip</th>
-        <th></th>
+        <th scope="col">id</th>
+        <th scope="col">user_id</th>
+        <th scope="col">word</th>
+        <th scope="col">translation</th>
+        <th scope="col">tip</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
      {% for card in cards %}
         <tr>
-
             <td>{{card.id}}</td>
             <td>{{card.user_id}}</td>
             <td>{{card.word}}</td>
             <td>{{card.translation}}</td>
             <td>{{card.tip}}</td>
-            <td><a href="/card/{{card.id}}">info</a></td>
+            <td>
+                <div>
+<!--                    <a href="/card/{{card.id}}">Info</a>-->
+                    <a href={{ url_for("get_card_id", card_id=card.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+<!--                    <a href="/card/{{card.id}}/edit_card">Edit card</a>-->
+                    <a href={{ url_for("card_update", card_id=card.id)}}>
+                        <button type="button" class="btn btn-success">Edit card</button>
+                    </a>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{card.id}}">
+                      Delete
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{card.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div>
+                                   id: {{card.id}}
+                                </div>
+                                <div>
+                                    user_id:{{card.user_id}}
+                                </div>
+                                <div>
+                                    word:{{card.word}}
+                                </div>
+                                <div>
+                                    translation:{{card.translation}}
+                                </div>
+                                <div>
+                                    tip:{{card.tip}}
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href={{ url_for("card_delete_by_id", card_id=card.id)}}>
+                                <button type="button" class="btn btn-success">Delete</button>
+                              </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </td>
         </tr>
      {%endfor%}
 

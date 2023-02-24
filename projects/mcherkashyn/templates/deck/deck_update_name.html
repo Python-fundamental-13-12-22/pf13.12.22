@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("deck_update_name", deck_id=deck.id)}} method="post">
+    <div class="mb-3">
+        Enter a new name:
+        <input name="name" type="text" value={{deck.name}}></input>
+    </div>
+    <button type="submit" class="btn btn-primary">update</button>
+</form>
+
+{%endblock%}

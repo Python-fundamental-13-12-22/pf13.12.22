@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("card_update", card_id=card.id)}} method="post">
+    <div class="mb-3">
+        Enter a new word:
+        <input name="word" type="text"></input>
+    </div>
+    <div class="mb-3">
+        Enter a new translation:
+        <input name="translation" type="text"></input>
+    </div>
+    <div class="mb-3">
+        Enter a new tip:
+        <input name="tip" type="text"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">update</button>
+</form>
+
+{%endblock%}
