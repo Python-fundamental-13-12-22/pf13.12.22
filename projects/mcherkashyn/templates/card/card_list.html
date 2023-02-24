@@ -5,6 +5,16 @@
     <button> Create card</button>
     </a>
 
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline"  action={{ url_for("cards_filter")}} method="post">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Filter</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Input and press Enter" aria-label="Username" aria-describedby="basic-addon1" name="sub_word">
+    </div>
+  </form>
+</nav>
 <table class="table">
     <thead>
     <tr>

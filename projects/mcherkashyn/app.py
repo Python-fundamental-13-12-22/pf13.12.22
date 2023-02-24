@@ -2,6 +2,7 @@ from flask import Flask, request, redirect
 from flask.helpers import url_for
 from flask.templating import render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 
 
@@ -159,6 +160,11 @@ class Card(db.Model):
         db.session.add(card)
         db.session.commit()
         return card
+
+    @classmethod
+    def card_filter(cls, sub_word):
+        cards = tuple(db.session.query(Card).filter(or_(Card.word.ilike(f"%{sub_word}%"), Card.tip.ilike(f"%{sub_word}%"), Card.translation.ilike(f"%{sub_word}%"))).all())
+        return cards
 
     def update(self, word, translation, tip):
         self.word = word
@@ -340,6 +346,18 @@ def card_create():
                 return redirect(url_for("get_card_id", card_id=card.id))
     except:
         return render_template('error.html')
+
+@app.route('/card/filter', methods=["POST", "GET"])
+def cards_filter():
+    cards_list = Card.get_all()
+    if not cards_list:
+        return render_template('error.html')
+    if request.method == "GET":
+        return render_template('card/card_list.html', cards=cards_list)
+    if request.method == "POST":
+        sub_word = request.form["sub_word"]
+        cards = Card.card_filter(sub_word)
+        return render_template('card/card_list.html', cards=cards)
 
 
 @app.route('/card/<int:card_id>/update', methods=["POST", "GET"])
