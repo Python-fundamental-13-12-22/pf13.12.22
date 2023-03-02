@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{%block content%}
+    <a href={{ url_for("deck_create") }} >
+    <button> Create deck</button>
+    </a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>user_id</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for deck in decks %}
+        <tr>
+
+            <td>{{deck.id}}</td>
+            <td>{{deck.name}}</td>
+            <td>{{deck.user_id}}</td>
+            <td><a href="/deck/{{deck.id}}">info</a></td>
+        </tr>
+     {%endfor%}
+
+    </tbody>
+</table>
+{%endblock%}

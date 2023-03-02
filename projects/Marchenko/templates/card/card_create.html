@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{%block content%}
+<form action={{ url_for("card_create")}} method="post">
+user_id
+<input name="user_id" type="number"></input>
+word
+<input name="word" type="text"></input>
+translation
+<input name="translation" type="text"></input>
+tip
+<input name="tip" type="text"></input>
+<button>add</button>
+</form>
+
+{%endblock%}
