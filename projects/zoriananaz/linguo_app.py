@@ -2,9 +2,7 @@ from flask import Flask, request, redirect
 from flask.helpers import url_for
 from flask.templating import render_template
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, ForeignKey
-from sqlalchemy import String
-from sqlalchemy import or_
+from sqlalchemy import Integer, ForeignKey, String, or_
 from sqlalchemy.orm import backref
 #import string
 #import secrets
@@ -19,13 +17,13 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"{dialect}://{username}:{password}@{host}:{port}/{database}"
 db = SQLAlchemy(app)
 
+
 class User(db.Model):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True, nullable=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     email = db.Column(db.String(20))
     password = db.Column(db.String(20))
-    #card = db.relationship("Card", back_populates="user")
 
     def __init__(self, name, email, password):
         self.name = name
@@ -41,7 +39,15 @@ class User(db.Model):
     def user_update(self, name, email):
         self.name = name
         self.email = email
-        #self.password = password
+        self.password = password
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def user_change_password(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
         db.session.add(self)
         db.session.commit()
         return self
@@ -52,6 +58,7 @@ class User(db.Model):
         db.session.add(user)
         db.session.commit()
         return user
+
     @classmethod
     def get_all(cls):
         users = db.session.execute(db.select(User).order_by(User.name)).scalars()
@@ -62,22 +69,45 @@ class User(db.Model):
         user = db.session.query(User).filter(User.id == id).first()
         return user
 
-    def user_delete_by_id(self):
-        db.session.delete(self)
-        db.session.commit()
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception:
+            return render_template('/error.html')
         return self
 
-    @classmethod
-    def user_change_password(cls, id, old_password, new_password):
-        user = db.session.get(User, id)
-        user.password = old_password
-        if old_password != new_password:
-            user.password = new_password
+    """"@classmethod
+    def user_change_password(cls, user_id, password, enter_new_password):
+        user = db.session.get(User, user_id)
+        user.password = enter_new_password
+        if enter_new_password != password:
+            user.password = enter_new_password
             db.session.add(user)
             db.session.commit()
             return user
         else:
-            return False
+            return False"""
+
+
+@app.route('/user_change_password/<int:user_id>', methods=["POST", "GET"])
+def change_password(user_id):
+    user = User.user_get_by_id(user_id)
+    if not user_id:
+        return render_template('/error.html')
+    if request.method == "GET":
+        return render_template('/user/user_change_password.html', user=user)
+    if request.method == "POST":
+        #user_id = request.form["user_id"]
+        name = request.form["name"]
+        email = request.form["email"]
+        enter_new_password = request.form["enter_new_password"]
+        confirm_new_password = request.form["confirm_new_password"]
+        if enter_new_password == confirm_new_password:
+            password = enter_new_password
+            user.user_change_password(name, email, password)
+            return redirect(url_for("get_user_id", user_id=user.id))
+    return render_template('home.html')
 
 @app.route('/')
 def hello_world():
@@ -87,6 +117,7 @@ def hello_world():
 def users():
     return 'User'"""
 
+
 @app.route('/create_user', methods=["POST", "GET"])
 def create_user():
     if request.method == "GET":
@@ -95,8 +126,14 @@ def create_user():
         name = request.form["name"]
         email = request.form["email"]
         password = request.form["password"]
-        user = User.user_create(name, email, password)
-        return redirect(url_for("get_user_id", user_id=user.id))
+        confirm_password = request.form["confirm_password"]
+        if password == confirm_password:
+            user = User.user_create(name, email, password)
+            return redirect(url_for("get_user_id", user_id=user.id))
+        else:
+            return redirect("/error.html")
+    return render_template('home.html')
+
 
 
 @app.route('/user_info/<int:user_id>')
@@ -105,6 +142,7 @@ def get_user_id(user_id):
     if user:
         return render_template('user/user_info.html', user=user)
     return render_template('home.html')
+
 
 @app.route('/user_info/<int:user_id>/update', methods=["POST", "GET"])
 def update_user(user_id):
@@ -120,6 +158,10 @@ def update_user(user_id):
         return redirect(url_for("get_user_id", user_id=user.id))
     return render_template('home.html')
 
+
+
+
+
 @app.route('/users_all')
 def get_users():
     users = db.session.execute(db.select(User).order_by(User.name)).scalars()
@@ -131,20 +173,16 @@ def delete_user(user_id):
     user = User.user_get_by_id(user_id)
     if not user:
         return render_template('/error.html')
-    user.user_delete_by_id()
-    return redirect("/user")
-
-
-
+    user.delete()
+    return redirect(url_for("get_users", user_id=user.id))
 
 
 class Deck(db.Model):
     __tablename__ = "deck"
     id = db.Column(Integer, primary_key=True)
     topic = db.Column(String(20))
-    user_id = db.Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
-    user = db.relationship(User, backref=backref('users', order_by=user_id))
-
+    user_id = db.Column(Integer, ForeignKey('users.id'))
+    user = db.relationship(User, backref=backref('deck', order_by=user_id))
 
     def __init__(self, topic, user_id):
         self.topic = topic
@@ -189,12 +227,19 @@ class Deck(db.Model):
         db.session.commit()
         return self
 
-
-
     def deck_delete_by_id(self):
         db.session.delete(self)
         db.session.commit()
         return self
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception:
+            return render_template('/error.html')
+        return self
+
 
 @app.route('/deck_create',  methods=["POST", "GET"])
 def create_deck():
@@ -240,18 +285,19 @@ def delete_deck(deck_id):
     deck = Deck.deck_get_by_id(deck_id)
     if not deck:
         return render_template('error.html')
-    deck.deck_delete_by_id()
-    return redirect('/deck')
+    deck.delete()
+    return redirect(url_for("get_all_decks", deck=deck.id))
+
 
 class Card(db.Model):
     __tablename__ = "card"
     id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer,  ForeignKey('users.id'))
+    user_id = db.Column(Integer, ForeignKey('users.id'))
     word = db.Column(String)
     translation = db.Column(String)
     tip = db.Column(String)
-    topic = db.Column(String)  #ForeignKey('deck.topic', ondelete='CASCADE'))
-    #user = db.relationship(User, back_populates='card')
+    topic = db.Column(String)
+    user = db.relationship(User, backref=backref('card', order_by=user_id))
 
     def __init__(self, word, translation, tip, topic, user_id):
         self.word = word
@@ -261,10 +307,10 @@ class Card(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return f"{self.id} {self.word}  {self.translation} {self.tip} {self.topic}"
+        return f"{self.id} {self.word}  {self.translation} {self.tip} {self.topic} {self.user_id}"
 
     def __str__(self):
-        return f"{self.id} {self.word} {self.translation} {self.tip} {self.topic}"
+        return f"{self.id} {self.word} {self.translation} {self.tip} {self.topic} {self.user_id}"
 
     @classmethod
     def card_create(cls, user_id, word, translation, tip, topic):
@@ -272,6 +318,7 @@ class Card(db.Model):
         db.session.add(card)
         db.session.commit()
         return card
+
     @classmethod
     def get_cards(cls):
         cards = db.session.execute(db.select(Card).order_by(Card.id)).scalars()
@@ -290,6 +337,7 @@ class Card(db.Model):
                                                      db.Card.topic.ilike(f"%{sub_word}%"))).all())
         return cards
 
+
     def card_update(self, word=None, translation=None, tip=None, topic=None):
         self.word = word
         self.translation = translation
@@ -299,10 +347,28 @@ class Card(db.Model):
         db.session.commit()
         return self
 
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception:
+            return render_template('/error.html')
+        return self
+
     def card_delete_by_id(self):
         db.session.delete(self)
         db.session.commit()
         return self
+
+@app.route('/cards_all/filter/<sub_word>', methods= ["GET", "POST"])
+def filter_word():
+    all_cards = Card.get_cards()
+    if request.method == "GET":
+        return render_template('card/ cards_all.html', cards=all_cards)
+    if request.method == "POST":
+        sub_word = request.form["sub_word"]
+        all_cards = Card.card_filter(sub_word)
+        return render_template('card/cards_all.html', cards=all_cards)
 
 
 @app.route('/card_info/<int:card_id>/update', methods=["POST", "GET"])
@@ -326,9 +392,10 @@ def update_card(card_id):
 def card_delete(card_id):
     card = Card.card_get_by_id(card_id)
     if not card:
-        render_template('error.html')
-    card.card_delete_by_id()
+        render_template('/error.html')
+    card.delete()
     return redirect('/card')
+
 
 @app.route('/card_info/<int:card_id>')
 def card_get_id(card_id):
@@ -337,17 +404,18 @@ def card_get_id(card_id):
         return render_template('card/card_info.html', card=card)
     return render_template('home.html')
 
+
 @app.route('/cards_all')
 def get_all_cards():
     cards = db.session.execute(db.select(Card).order_by(Card.id)).scalars()
     return render_template('card/cards_all.html', cards=cards)
+
 
 @app.route('/card_create', methods=["POST", "GET"])
 def create_card():
     if request.method == "GET":
         return render_template('/card/card_create.html')
     if request.method == "POST":
-        user_id = request.form["user_id"]
         word = request.form["word"]
         translation = request.form["translation"]
         tip = request.form["tip"]
@@ -355,6 +423,8 @@ def create_card():
         user_id = request.form["user_id"]
         card = Card.card_create(user_id, word, tip, translation,  topic)
         return redirect(url_for("card_get_id", card_id=card.id))
+
+
 
 
 if __name__ == "__main__":

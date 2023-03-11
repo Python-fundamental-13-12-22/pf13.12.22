@@ -155,8 +155,7 @@ def card_get_by_id(card_id):
 def card_filter(sub_word):
     cards = tuple(session.query(Card).filter(or_(Card.word.ilike(f"%{sub_word}%"),
                 Card.translation.ilike(f"%{sub_word}%"),
-                Card.tip.ilike(f"%{sub_word}%"),
-                Card.topic.ilike(f"%{sub_word}%"))).all())
+                Card.tip.ilike(f"%{sub_word}%"))).all())
     return cards
 
 
@@ -186,3 +185,4 @@ def card_delete_by_id(card_id):
 #print(card_create(28, "winter", "зима", "When snowing weather...", "seasons"))
 #print(deck_get_by_id(1))
 #card_update(3,"red", "червоний", "The heard is ...", "colors" )
+print(card_filter("u"))
