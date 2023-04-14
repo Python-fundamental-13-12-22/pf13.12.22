@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{%block body%}
+<h2>Decks</h2>
+   {% for deck in decks %}
+    <a href="/decks_all/{deck.id}">  </a><br>
+<table id="decks">
+    <thead>
+            <td>id</td>
+            <td>topic</td>
+            <td>user_id</td>
+    </thead>
+<tbody>
+        <tr>
+
+            <td>{{deck.id}}</td>
+            <td>{{deck.topic}}</td>
+            <td>{{deck.user_id}}</td>
+                 <td>
+                    <a href={{url_for("get_id_deck", deck_id=deck.id)}}>
+                        <button type="button" class="btn btn-info">Info</button>
+                    </a>
+               <a href={{url_for("update_deck", deck_id=deck.id)}}>
+                        <button type="button" class="btn btn-info">Update</button>
+                    </a>
+                     <a href={{url_for("delete_deck", deck_id=deck.id)}}>
+                        <button type="button" class="btn btn-info">Delete</button>
+                    </a>
+            </td>
+        </tr>
+ {%endfor%}
+</tbody>
+</table>
+
+ {%endblock%}
